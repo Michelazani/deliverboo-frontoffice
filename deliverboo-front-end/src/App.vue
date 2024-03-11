@@ -7,12 +7,13 @@ export default{
 </script>
 
 <template>
-  <h1>ciao</h1>
   <AppHeader/>
+  <router-view></router-view>
   <AppFooter/>
 </template>
 
 <style lang="scss">
-  @use './style/general.scss' as *;
+  @import './styles/general.scss';
+  
 
 </style>
