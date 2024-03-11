@@ -12,10 +12,11 @@
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Tipo
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <ul class="dropdown-menu dropdown-menu-dark my-list-type" >
+                            <li v-for="(type,index) in JSON.parse(types)" :key="index" @click="()=>console.log('ciao')">
+                                {{ type.name_type }}
+                                <!-- <router-link :to="{name:'prova'}" > prova</router-link> -->
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -33,7 +34,42 @@
 </template>
 
 <script>
+import axios from 'axios';
 
+export default {
+    name:'AppHeader',
+    data(){
+        return{
+            types:null,
+        }
+    },
+    methods:{
+        getTypes(){
+            axios.get('http://127.0.0.1:8000/api/types', {
+                params: {
+                }
+            })
+            .then((response) => {
+                // console.log(response.data.results);
+                // mi serve il this. per poter accedere ai data
+                this.types=JSON.stringify(response.data);
+                // console.log(response.data);
+            })
+            .catch(function (error) {
+                console.warn(error);
+            })
+        },
+    },
+    mounted(){
+        this.getTypes();
+    }
+}
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+ul.my-list-type{
+    li{
+        cursor: pointer;
+    }
+}
+</style>
