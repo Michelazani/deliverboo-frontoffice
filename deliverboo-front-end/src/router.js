@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Appprova from './components/Appprova.vue';
+import AppRestaurants from './components/AppRestaurants.vue';
+import AppDishes from './components/AppDishes.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
             {
-                path: '/prova',
-                name: 'prova',
-                component: Appprova
+                path: '/',
+                name: 'restaurants',
+                component: AppRestaurants
             },
-            // {
-            //     path: '/chisiamo',
-            //     name: 'ChiSiamo',
-            //     component: ChiSiamo
-            // },
+            {
+                path: '/dishes',
+                name: 'dishes',
+                component: AppDishes
+            },
             // {
             //     path: '/contatti',
             //     name: 'contatti',

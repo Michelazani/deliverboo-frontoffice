@@ -1,6 +1,6 @@
 <template >
     <div>
-        ciao
+        piatti
     </div>
 </template>
 <script>

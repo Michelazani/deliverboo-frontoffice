@@ -15,7 +15,6 @@
                         <ul class="dropdown-menu dropdown-menu-dark my-list-type" >
                             <li v-for="(type,index) in JSON.parse(types)" :key="index" @click="()=>console.log('ciao')">
                                 {{ type.name_type }}
-                                <!-- <router-link :to="{name:'prova'}" > prova</router-link> -->
                             </li>
                         </ul>
                     </li>
