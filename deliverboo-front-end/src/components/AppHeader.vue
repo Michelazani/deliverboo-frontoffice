@@ -13,7 +13,7 @@
                             Tipo
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark my-list-type" >
-                            <li v-for="(type,index) in JSON.parse(types)" :key="index" @click="()=>console.log('ciao')">
+                            <li v-for="(type,index) in types" :key="index" @click="()=>console.log('ciao')" class="ps-3 pb-2">
                                 {{ type.name_type }}
                             </li>
                         </ul>
@@ -49,9 +49,9 @@ export default {
                 }
             })
             .then((response) => {
-                // console.log(response.data.results);
+                console.log(response.data.results);
                 // mi serve il this. per poter accedere ai data
-                this.types=JSON.stringify(response.data);
+                this.types=response.data.results;
                 // console.log(response.data);
             })
             .catch(function (error) {
