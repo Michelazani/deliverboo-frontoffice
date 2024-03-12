@@ -1,35 +1,18 @@
 <template lang="">
-<header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">DeliverBoo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Tipo
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark my-list-type" >
-                            <li v-for="(type,index) in types" :key="index" @click="()=>console.log('ciao')" class="ps-3 pb-2">
-                                {{ type.name_type }}
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="container-fluid d-flex justify-content-end">
-                    <form class="d-flex w-25" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
+    <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">DeliverBoo</a>
             </div>
-        </div>
-        </nav>
-
-</header>
+            </nav>
+                <div class="container mt-3 mb-3" id="">
+                    <h4>Seleziona la tipologia del ristorante:</h4>
+                        <div class="form-check form-check-inline" v-for="(type,index) in types" :key="index" @click="()=>console.log('ciao')">
+                            <input class="form-check-input" type="checkbox" id="type" value="option1">
+                            <label class="form-check-label" for="type">{{ type.name_type }}</label>
+                        </div>
+                </div>
+    </header>
 </template>
 
 <script>
@@ -66,9 +49,5 @@ export default {
 </script>
 
 <style lang="scss">
-ul.my-list-type{
-    li{
-        cursor: pointer;
-    }
-}
+
 </style>
