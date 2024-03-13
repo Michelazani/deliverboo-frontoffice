@@ -10,16 +10,33 @@
                     <div class="card-image">
                             <!-- <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain" src="{{ asset('storage') . '/' . restaurant.image_restaurant }}" alt="restaurant Image"> -->
                     </div>
-                    <p>Tipo: {{ restaurant.name_type}}</p>
+                    <p>
+                        Tipo: 
+                        <span v-for="(type, index) in restaurant.types" :key="index">
+                            {{ type.name_type}} 
+                            <span v-if="index == restaurant.types.length - 1">
+                                .  
+                            </span>
+                            <span v-else>
+                                ,
+                            </span>
+                        </span>
+                    </p>
                     <p>Indirizzo: {{ restaurant.address_restaurant}}</p>
                 </article>
             </li>
             {{ console.log(store.restaurantsData) }}
         </ul>
-</div>
-
+        </div>
     </div>
 </template>
+
+@if ( $types[count($types) -1]->name_type == $type->name_type)
+            .
+            @else
+            ,
+            @endif 
+
 <script>
 import {store} from '../store.js';
 import axios from 'axios';
