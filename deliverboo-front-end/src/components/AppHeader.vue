@@ -7,8 +7,8 @@
             </nav>
                 <div class="container mt-3 mb-3" id="">
                     <h4>Seleziona la tipologia del ristorante:</h4>
-                        <div class="form-check form-check-inline" v-for="(type,index) in types" :key="index" @click="()=>console.log('ciao')">
-                            <input class="form-check-input" type="checkbox" id="type" value="option1">
+                        <div class="form-check form-check-inline" v-for="(type,index) in types" :key="index">
+                            <input class="form-check-input" type="checkbox" id="type" value="{{store.newTypeFilter=type.NameType}}">
                             <label class="form-check-label" for="type">{{ type.name_type }}</label>
                         </div>
                 </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { store } from '@/store';
 import axios from 'axios';
 
 export default {
@@ -23,6 +24,7 @@ export default {
     data(){
         return{
             types:null,
+            store,
         }
     },
     methods:{

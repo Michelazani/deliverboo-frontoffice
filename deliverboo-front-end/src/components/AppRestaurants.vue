@@ -23,8 +23,9 @@
                     </p>
                     <p>Indirizzo: {{ restaurant.address_restaurant}}</p>
                 </article>
+                
             </li>
-            {{ console.log(store.restaurantsData) }}
+            {{ console.log(store.newTypeFilter) }}
         </ul>
         </div>
     </div>
@@ -40,6 +41,7 @@ export default {
             restaurants:null,
             rest:null,
             store,
+            typeFilter:store.newTypeFilter,
         }
     },
     methods:{
@@ -57,7 +59,14 @@ export default {
                 .finally(function () {
                     // always executed
                 });
-        },
+        },  
+    },
+    watch:{
+        question:{
+            handler(typeFilter){
+               console.log('paperella') 
+            }
+        }
     },
     mounted(){
         this.getRestaurants();
