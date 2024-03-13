@@ -8,14 +8,16 @@
                 <div class="container mt-3 mb-3" id="">
                     <h4>Seleziona la tipologia del ristorante:</h4>
                         <div class="form-check form-check-inline" v-for="(type,index) in types" :key="index">
-                            <input class="form-check-input" type="checkbox" id="type" value="{{store.newTypeFilter=type.NameType}}">
+                            <input class="form-check-input" type="checkbox" id="type" @click="setTargetType(type.name_type)">
                             <label class="form-check-label" for="type">{{ type.name_type }}</label>
                         </div>
                 </div>
+                <p> {{ targetType }}</p>
     </header>
 </template>
 
 <script>
+import { useState } from '@/state';
 import { store } from '@/store';
 import axios from 'axios';
 
@@ -25,7 +27,14 @@ export default {
         return{
             types:null,
             store,
+            useState,
         }
+    },
+    setup(){
+        const[targetType,setTargetType] = useState('');
+        return{
+            targetType, setTargetType
+        };
     },
     methods:{
         getTypes(){
