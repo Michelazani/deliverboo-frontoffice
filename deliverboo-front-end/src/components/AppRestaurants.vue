@@ -13,12 +13,11 @@
                     <p>
                         Tipo: 
                         <span v-for="(type, index) in restaurant.types" :key="index">
-                            {{ type.name_type}} 
                             <span v-if="index == restaurant.types.length - 1">
-                                .  
+                                {{ type.name_type}}.  
                             </span>
                             <span v-else>
-                                ,
+                                {{ type.name_type}},
                             </span>
                         </span>
                     </p>
@@ -30,12 +29,6 @@
         </div>
     </div>
 </template>
-
-@if ( $types[count($types) -1]->name_type == $type->name_type)
-            .
-            @else
-            ,
-            @endif 
 
 <script>
 import {store} from '../store.js';
