@@ -8,7 +8,7 @@
                 <div class="container mt-3 mb-3" id="">
                     <h4>Seleziona la tipologia del ristorante:</h4>
                         <div class="form-check form-check-inline" v-for="(type,index) in types" :key="index">
-                            <input class="form-check-input" type="checkbox" id="type" @click="setTargetType(type.name_type)">
+                            <input class="form-check-input" type="checkbox" id="type" @click="setTypes(type.name_type)">
                             <label class="form-check-label" for="type">{{ type.name_type }}</label>
                         </div>
                 </div>
@@ -31,7 +31,7 @@ export default {
         }
     },
     setup(){
-        const[targetType,setTargetType] = useState('');
+        const[targetType,setTargetType] = useState([]);
         return{
             targetType, setTargetType
         };
@@ -52,6 +52,18 @@ export default {
                 console.warn(error);
             })
         },
+        setTypes(type){
+            const indexType=this.targetType.indexOf(type)
+            if (indexType == -1 ){
+                this.setTargetType([...this.targetType,type])
+                this.store.typeFilter=this.targetType;
+            }else{
+                const newTypes = this.targetType.filter((element, index) => index !== indexType);
+                this.setTargetType([...newTypes])
+                this.store.typeFilter=this.targetType;
+            }
+            
+        }
     },
     mounted(){
         this.getTypes();

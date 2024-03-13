@@ -25,13 +25,14 @@
                 </article>
                 
             </li>
-            {{ console.log(store.newTypeFilter) }}
+            {{ console.log(store.typeFilter) }}
         </ul>
         </div>
     </div>
 </template>
 
 <script>
+import { useState } from '@/state';
 import {store} from '../store.js';
 import axios from 'axios';
 export default {    
@@ -41,8 +42,15 @@ export default {
             restaurants:null,
             rest:null,
             store,
-            typeFilter:store.newTypeFilter,
+            typess:store.typeFilter,
+            useState,
         }
+    },
+    setup(){
+        const[targetType,setTargetType] = useState([]);
+        return{
+            targetType, setTargetType
+        };
     },
     methods:{
         getRestaurants(){
@@ -59,13 +67,13 @@ export default {
                 .finally(function () {
                     // always executed
                 });
-        },  
+        }, 
     },
     watch:{
-        question:{
-            handler(typeFilter){
-               console.log('paperella') 
-            }
+      types:{
+        function(){
+           this.getRestaurants();
+        }
         }
     },
     mounted(){
