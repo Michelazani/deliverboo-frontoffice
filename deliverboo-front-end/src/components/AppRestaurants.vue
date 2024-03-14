@@ -22,10 +22,9 @@
                         </span>
                     </p>
                     <p>Indirizzo: {{ restaurant.address_restaurant}}</p>
-                </article>
-                
+                    <button type="button" :data-restaurant-id="restaurant.id" @click="(e)=>clickHandler(e)" class="btn btn-info">Visualizza il Menu</button>
+                </article>            
             </li>
-            {{ console.log(typesFilterFunc('ciao', restaurants)) }}
         </ul>
         </div>
     </div>
@@ -127,9 +126,13 @@ export default {
 
             return newArray;
 
-        }
-
-    },
+        },
+            clickHandler(e){
+                this.store.restaurantTargetId = e.target.dataset.restaurantId;
+                this.$router.push('/restaurant/dishes')
+                //console.log(e.target.dataset.restaurantId);
+            },
+        },
 
     watch: {
 

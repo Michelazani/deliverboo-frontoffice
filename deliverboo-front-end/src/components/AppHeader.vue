@@ -12,7 +12,7 @@
                             <label class="form-check-label" for="type">{{ type.name_type }}</label>
                         </div>
                 </div>
-                <p> {{ targetType }}</p>
+         
     </header>
 </template>
 

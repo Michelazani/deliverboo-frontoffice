@@ -10,7 +10,7 @@ const router = createRouter({
                 component: AppRestaurants
             },
             {
-                path: '/dishes',
+                path: '/restaurant/dishes',
                 name: 'dishes',
                 component: AppDishes
             },
