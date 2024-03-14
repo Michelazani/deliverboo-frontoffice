@@ -7,7 +7,7 @@
                         <h1>{{ dish.name }}</h1>
                     </div>
                     <div class="card-image">
-                        <!-- <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain" src="{{ asset('storage') . '/' . $dish->img_dish }}" alt="Dish Image"> -->
+                        <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain"  :src="'http://127.0.0.1:8000/storage/' + dish.img_dish" alt="Dish Image"> 
                     </div>
                     <p>Prezzo: €{{ dish.price }}</p>
                     <p>Disponibilità: {{ dish.available ? 'Si' : 'No' }}</p>  

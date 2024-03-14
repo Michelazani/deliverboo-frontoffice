@@ -15,7 +15,7 @@
                         <h1>{{ restaurant.name_restaurant }}</h1>
                     </div>
                     <div class="card-image">
-                            <!-- <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain" src="{{ asset('storage') . '/' . restaurant.image_restaurant }}" alt="restaurant Image"> -->
+                        <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain" :src="'http://127.0.0.1:8000/storage/' + restaurant.image_restaurant" alt="restaurant Image"> 
                     </div>
                     <p>
                         Tipo: 
