@@ -2,7 +2,7 @@
     <div>
         <div class="container">
         <ul class="list-unstyled row">
-            <li class="col-sm-6 col-md-3 d-flex justify-content-center p-3" v-for="(restaurant,index) in typesFilterFunc('ciao', restaurants)" :key="index"> 
+            <li class="col-sm-6 col-md-3 d-flex justify-content-center p-3" v-for="(restaurant,index) in typesFilterFunc(store.typeFilter, restaurants)" :key="index"> 
                 <article class="card text-center mx-auto p-3 w-100" >
                     <div class="h-50 d-flex justify-content-center align-items-center">
                         <h1>{{ restaurant.name_restaurant }}</h1>
@@ -33,61 +33,128 @@
 
 <script>
 import { useState } from '@/state';
-import {store} from '../store.js';
+
+import { store } from '../store.js';
+
 import axios from 'axios';
-export default {    
-    name:'AppRestaurant',
+
+
+export default {
+
+    name: 'AppRestaurant',
+
     data(){
+
         return{
-            rest:null,
+
             store,
+
             useState,
-        }
-    },
-    setup(){
-        const[restaurants,setRestaurants] = useState([]);
-        return{
-            restaurants, setRestaurants
+
         };
+        
     },
-    methods:{
-        getRestaurants(){
+
+    setup() {
+
+        const [restaurants, setRestaurants] = useState([]);
+
+        return {
+
+            restaurants, setRestaurants
+
+        };
+
+    },
+
+    methods: {
+
+        getRestaurants() {
+
             axios.get('http://127.0.0.1:8000/api/restaurants')
+
                 .then((response) => {
+
                     // handle success
+
                     console.log(response.data.results);
+
                     this.setRestaurants(response.data.results);
+
                 })
+
                 .catch(function (error) {
+
                     // handle error
+
                     console.log(error);
+
                 })
+
                 .finally(function () {
+
                     // always executed
+
                 });
-        },  
-        typesFilterFunc(filterValue, ary){
-            return ary.filter((element)=>{
-                if(element.restaurant_id){
-                    element.includes()
-                }
+
+        },
+
+        typesFilterFunc(filterValue, ary) {
+
+            const newArray = [];
+
+            if (filterValue.length === 0 || filterValue == '') {
+
+                return ary;
+
+            }
+
+            ary.forEach(element => {
+
+                element.types.forEach(type => {
+
+                    if (filterValue.includes(type.name_type)) {
+
+                        newArray.push(element);
+
+                        return;
+
+                    }
+
+                });
+
             });
-            
-            
+
+            return newArray;
+
         }
+
     },
-    watch:{
+
+    watch: {
+
         'store.typeFilter': {
-            handler(newValue, oldValue){
-                console.log('paperella')
+
+            handler(newValue, oldValue) {
+
+                console.log('paperella');
+
                 this.getRestaurants();
-            }, 
+
+            },
+
             deep: true,
+
         }
+
     },
-    mounted(){
+
+    mounted() {
+
         this.getRestaurants();
+
     }
+
 }
 </script>
 
