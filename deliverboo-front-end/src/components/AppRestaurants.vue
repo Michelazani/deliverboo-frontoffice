@@ -2,7 +2,7 @@
     <div>
         <div class="container">
         <ul class="list-unstyled row">
-            <li class="col-sm-6 col-md-3 d-flex justify-content-center p-3" v-for="(restaurant,index) in restaurants" :key="index"> 
+            <li class="col-sm-6 col-md-3 d-flex justify-content-center p-3" v-for="(restaurant,index) in typesFilterFunc('ciao', restaurants)" :key="index"> 
                 <article class="card text-center mx-auto p-3 w-100" >
                     <div class="h-50 d-flex justify-content-center align-items-center">
                         <h1>{{ restaurant.name_restaurant }}</h1>
@@ -25,7 +25,7 @@
                 </article>
                 
             </li>
-            {{ console.log(store.typeFilter) }}
+            {{ console.log(typesFilterFunc('ciao', restaurants)) }}
         </ul>
         </div>
     </div>
@@ -39,17 +39,15 @@ export default {
     name:'AppRestaurant',
     data(){
         return{
-            restaurants:null,
             rest:null,
             store,
-            typess:store.typeFilter,
             useState,
         }
     },
     setup(){
-        const[targetType,setTargetType] = useState([]);
+        const[restaurants,setRestaurants] = useState([]);
         return{
-            targetType, setTargetType
+            restaurants, setRestaurants
         };
     },
     methods:{
@@ -58,7 +56,7 @@ export default {
                 .then((response) => {
                     // handle success
                     console.log(response.data.results);
-                    this.restaurants = response.data.results;
+                    this.setRestaurants(response.data.results);
                 })
                 .catch(function (error) {
                     // handle error
@@ -67,13 +65,24 @@ export default {
                 .finally(function () {
                     // always executed
                 });
-        }, 
+        },  
+        typesFilterFunc(filterValue, ary){
+            return ary.filter((element)=>{
+                if(element.restaurant_id){
+                    element.includes()
+                }
+            });
+            
+            
+        }
     },
     watch:{
-      types:{
-        function(){
-           this.getRestaurants();
-        }
+        'store.typeFilter': {
+            handler(newValue, oldValue){
+                console.log('paperella')
+                this.getRestaurants();
+            }, 
+            deep: true,
         }
     },
     mounted(){
