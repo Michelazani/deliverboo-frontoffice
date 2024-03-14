@@ -66,7 +66,7 @@ export default {
     setup() {
 
         const [restaurants, setRestaurants] = useState([]);
-        const[targetType,setTargetType] = useState([]);
+        const [targetType,setTargetType] = useState([]);
 
         return {
 
