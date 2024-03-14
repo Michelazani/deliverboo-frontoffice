@@ -1,6 +1,13 @@
 <template >
     <div>
         <div class="container">
+            <div class="container mt-3 mb-3" id="">
+                <h4>Seleziona la tipologia del ristorante:</h4>
+                    <div class="form-check form-check-inline" v-for="(type,index) in types" :key="index">
+                        <input class="form-check-input" type="checkbox" id="type" @click="setTypes(type.name_type)">
+                        <label class="form-check-label" for="type">{{ type.name_type }}</label>
+                    </div>
+            </div>
         <ul class="list-unstyled row">
             <li class="col-sm-6 col-md-3 d-flex justify-content-center p-3" v-for="(restaurant,index) in typesFilterFunc(store.typeFilter, restaurants)" :key="index"> 
                 <article class="card text-center mx-auto p-3 w-100" >
@@ -50,6 +57,8 @@ export default {
 
             useState,
 
+            types:null,
+
         };
         
     },
@@ -57,16 +66,46 @@ export default {
     setup() {
 
         const [restaurants, setRestaurants] = useState([]);
+        const[targetType,setTargetType] = useState([]);
 
         return {
 
-            restaurants, setRestaurants
+            restaurants, setRestaurants,
+            targetType, setTargetType
 
         };
 
     },
 
     methods: {
+        getTypes(){
+            axios.get('http://127.0.0.1:8000/api/types', {
+                params: {
+                }
+            })
+            .then((response) => {
+                console.log(response.data.results);
+                // mi serve il this. per poter accedere ai data
+                this.types=response.data.results;
+                // console.log(response.data);
+            })
+            .catch(function (error) {
+                console.warn(error);
+            })
+        },
+
+        setTypes(type){
+            const indexType=this.targetType.indexOf(type)
+            if (indexType == -1 ){
+                this.setTargetType([...this.targetType,type])
+                this.store.typeFilter=this.targetType;
+            }else{
+                const newTypes = this.targetType.filter((element, index) => index !== indexType);
+                this.setTargetType([newTypes])
+                this.store.typeFilter=this.targetType;
+            }
+            
+        },
 
         getRestaurants() {
 
@@ -155,6 +194,7 @@ export default {
     mounted() {
 
         this.getRestaurants();
+        this.getTypes();
 
     }
 
