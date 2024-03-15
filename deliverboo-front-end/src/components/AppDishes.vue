@@ -49,7 +49,7 @@
                             <p class="me-2">{{ dishCart.name }}</p>
                             <div class="d-flex input-group my-5 text-center">
                                 <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">+</button>
-                                <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" :value=" dishCart.quantity" @input="(e)=>dishQuantityHandler(e)">
+                                <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" @input="(e)=>dishQuantityHandler(e)" :value=" dishCart.quantity" >
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
                             <p class="me-2">€ {{ dishCart.price }}</p>
@@ -161,8 +161,18 @@ export default {
                 {{ console.log(this.dishesCartList) }}
                 return ;
             }
+            // else if (String(e.target.value).charCodeAt() == NaN) {
+            //     return
+                
+            // }
+            // else if(String(e.target.value).charCodeAt() < 48 || String(e.target.value).charCodeAt() > 57 ||e.target.value < 1){
+            //     e.target.value = 1
+            //     this.dishesCartList[checkDish].quantity = 1
+            //     return;
+            // }
+            e.targetValue = e.target.value
             this.dishesCartList[checkDish].quantity = e.target.value
-            console.log(e.target.value)
+            console.log(String(e.target.value).charCodeAt())
         },
         pricesSumFunc(){
             if(this.dishesCartList.length == 0){
