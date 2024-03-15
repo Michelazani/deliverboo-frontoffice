@@ -39,7 +39,7 @@
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrito</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -161,9 +161,10 @@ export default {
             if(this.dishesCartList.length == 0){
                 return 0.00
             }
-            let result;
-            this.dishesCartList.forEach(item => result = (parseFloat(item.price) * parseInt(item.quantity)).toFixed(2));
-            return result;
+            
+            let result = 0;
+            this.dishesCartList.forEach(item => result += Number((parseFloat(item.price) * parseInt(item.quantity))));
+            return result.toFixed(2);
         }
     },
     watch: {
