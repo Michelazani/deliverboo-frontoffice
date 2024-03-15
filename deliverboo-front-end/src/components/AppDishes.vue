@@ -123,7 +123,7 @@ export default {
             const checkDish = this.dishesCartList.findIndex(element => element.id === dish.id);
             {{ console.log(checkDish) }}
             if(checkDish > -1){
-                this.dishesCartList[checkDish].quantity += 1;
+                this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) + 1;
                 // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
                 {{ console.log(this.dishesCartList) }}
                 return ;
@@ -148,12 +148,12 @@ export default {
             const checkDish = this.dishesCartList.findIndex(element => element.id == dishId);
             {{ console.log(this.dishesCartList[checkDish]) }}
             if(countType == '+'){
-                this.dishesCartList[checkDish].quantity += 1;
+                this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) + 1;
                 // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
                 {{ console.log(this.dishesCartList) }}
                 return ;
             }else if(countType == '-'){
-                this.dishesCartList[checkDish].quantity -= 1;
+                this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) - 1;
                 // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
                 {{ console.log(this.dishesCartList) }}
                 return ;
@@ -165,7 +165,6 @@ export default {
             if(this.dishesCartList.length == 0){
                 return ;
             }
-            
             let result = 0;
             this.dishesCartList.forEach(item => result += Number((parseFloat(item.price) * parseInt(item.quantity))));
             return result.toFixed(2);
