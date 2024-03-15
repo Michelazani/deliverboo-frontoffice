@@ -31,7 +31,7 @@
                     </div>
                     <p>Prezzo: €{{ dish.price }}</p>
                     <p>Disponibilità: {{ dish.available ? 'Si' : 'No' }}</p>  
-                    <button type="button" :data-dish-id="dish.id" @click="addClickHandler(dish)" class="btn btn-info">+</button>
+                    <button type="button" :data-dish-id="dish.id" @click="addClickHandler(dish)" class="btn btn-info btn-sm">+</button>
                 </article>
             </li>
         </ul>
@@ -53,6 +53,7 @@
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
                             <p class="me-2">€ {{ dishCart.price }}</p>
+                            <button type="button"  :data-dish-id="dishCart.id" @click="(e)=>removeClickHandler(e)" class="btn btn-danger btn-sm my-5">X</button>
                         </div>
                     </li>
                 </ul>
@@ -135,10 +136,13 @@ export default {
             });
             {{ console.log(this.dishesCartList) }}
             return ; 
-
+        },
+        removeClickHandler(e){
+            // indexOf quando non trova elemento nell'array , mette -1
+            const dishId = e.target.dataset.dishCartId;
+            this.dishesCartList.splice(dishId, 1);
         },
         dishQuantityHandler(e){
-
             const dishId = e.target.dataset.dishCartId;
             const countType = e.target.dataset.countType;
             const checkDish = this.dishesCartList.findIndex(element => element.id == dishId);
@@ -159,7 +163,7 @@ export default {
         },
         pricesSumFunc(){
             if(this.dishesCartList.length == 0){
-                return 0.00
+                return ;
             }
             
             let result = 0;
