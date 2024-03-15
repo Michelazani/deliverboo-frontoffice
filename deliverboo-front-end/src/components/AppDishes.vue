@@ -20,6 +20,8 @@
                 </p>
                 <p>Indirizzo: {{ rest.address_restaurant}}</p>
         </article>
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+
         <ul class="list-unstyled row">
             <li v-for="(dish,index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3"> 
                 <article class="card text-center mx-auto p-3 w-100" >
@@ -35,21 +37,19 @@
                 </article>
             </li>
         </ul>
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
-
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrito</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body" >
                 <ul class="list-group">
                     <li v-for="(dishCart, index) in dishesCartList" :key="index" class="list-group-item">
                         <div class="d-flex">
                             <p class="me-2">{{ dishCart.name }}</p>
-                            <div class="d-flex input-group">
+                            <div class="d-flex input-group my-5 text-center">
                                 <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">+</button>
-                                <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="" :value=" dishCart.quantity" @input="(e)=>dishQuantityHandler(e)">
+                                <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" :value=" dishCart.quantity" @input="(e)=>dishQuantityHandler(e)">
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
                             <p class="me-2">€ {{ dishCart.price }}</p>
@@ -153,6 +153,9 @@ export default {
                 {{ console.log(this.dishesCartList) }}
                 return ;
             }else if(countType == '-'){
+                if(this.dishesCartList[checkDish].quantity == 1){
+                    return;
+                }
                 this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) - 1;
                 // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
                 {{ console.log(this.dishesCartList) }}
