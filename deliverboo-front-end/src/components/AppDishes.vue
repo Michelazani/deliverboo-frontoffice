@@ -1,5 +1,5 @@
 <template >
-    <div class="container">
+    <div class="container position-relative">
         <article v-for="(rest,index) in restaurant" :key="index" class="card w-25 text-center mx-auto p-4 m-4" >
             <h1>
                 {{ rest.name_restaurant }}
@@ -35,7 +35,30 @@
                 </article>
             </li>
         </ul>
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
 
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="list-group">
+                    <li v-for="(dishCart, index) in dishesCartList" :key="index" class="list-group-item">
+                        <div class="d-flex">
+                            <p class="me-2">{{ dishCart.name }}</p>
+                            <div class="d-flex input-group">
+                                <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">+</button>
+                                <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="" :value=" dishCart.quantity" @input="(e)=>dishQuantityHandler(e)">
+                                <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
+                            </div>
+                            <p class="me-2">€ {{ dishCart.price }}</p>
+                        </div>
+                    </li>
+                </ul>
+                {{ pricesSumFunc() }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -113,17 +136,44 @@ export default {
             {{ console.log(this.dishesCartList) }}
             return ; 
 
+        },
+        dishQuantityHandler(e){
+
+            const dishId = e.target.dataset.dishCartId;
+            const countType = e.target.dataset.countType;
+            const checkDish = this.dishesCartList.findIndex(element => element.id == dishId);
+            {{ console.log(this.dishesCartList[checkDish]) }}
+            if(countType == '+'){
+                this.dishesCartList[checkDish].quantity += 1;
+                // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
+                {{ console.log(this.dishesCartList) }}
+                return ;
+            }else if(countType == '-'){
+                this.dishesCartList[checkDish].quantity -= 1;
+                // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
+                {{ console.log(this.dishesCartList) }}
+                return ;
+            }
+            this.dishesCartList[checkDish].quantity = e.target.value
+            console.log(e.target.value)
+        },
+        pricesSumFunc(){
+            if(this.dishesCartList.length == 0){
+                return 0.00
+            }
+            let result;
+            this.dishesCartList.forEach(item => result = (parseFloat(item.price) * parseInt(item.quantity)).toFixed(2));
+            return result;
         }
     },
-    // watch: {
-    //     'store.typeFilter': {
-    //         handler(newValue, oldValue) {
-        //             console.log('paperella');
-    //             this.getRestaurants();
-    //         },
-    //         deep: true,
-    //     }
-    // },
+    watch: {
+        dishesCartList: {
+            handler(newValue, oldValue) {
+                    console.log(newValue);
+            },
+            deep: true,
+        }
+    },
     mounted() {
         this.getRestaurant();
         this.getDishes();
