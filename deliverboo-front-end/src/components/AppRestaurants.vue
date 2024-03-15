@@ -39,42 +39,26 @@
 
 <script>
 import { useState } from '@/state';
-
 import { store } from '../store.js';
-
 import axios from 'axios';
 
-
 export default {
-
     name: 'AppRestaurant',
-
     data(){
-
         return{
-
             store,
-
             useState,
-
             types:null,
-
         };
         
     },
-
     setup() {
-
         const [restaurants, setRestaurants] = useState([]);
         const [targetType,setTargetType] = useState([]);
-
         return {
-
             restaurants, setRestaurants,
             targetType, setTargetType
-
         };
-
     },
 
     methods: {
@@ -108,63 +92,36 @@ export default {
         },
 
         getRestaurants() {
-
             axios.get('http://127.0.0.1:8000/api/restaurants')
-
                 .then((response) => {
-
                     // handle success
-
                     console.log(response.data.results);
-
                     this.setRestaurants(response.data.results);
-
                 })
-
                 .catch(function (error) {
-
                     // handle error
-
                     console.log(error);
-
                 })
-
                 .finally(function () {
-
                     // always executed
-
                 });
-
         },
 
         typesFilterFunc(filterValue, ary) {
-
             const newArray = [];
-
             if (filterValue.length === 0 || filterValue == '') {
-
                 return ary;
-
             }
-
             ary.forEach(element => {
-
                 element.types.forEach(type => {
-
                     if (filterValue.includes(type.name_type)) {
-
                         newArray.push(element);
-
                         return;
-
                     }
-
                 });
-
             });
-
+            console.log(newArray);
             return newArray;
-
         },
             clickHandler(e){
                 this.store.restaurantTargetId = e.target.dataset.restaurantId;
@@ -174,30 +131,19 @@ export default {
         },
 
     watch: {
-
         'store.typeFilter': {
-
             handler(newValue, oldValue) {
-
                 console.log('paperella');
-
+                console.log(this.store.typeFilter);
                 this.getRestaurants();
-
             },
-
             deep: true,
-
         }
-
     },
-
     mounted() {
-
         this.getRestaurants();
         this.getTypes();
-
     }
-
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template >
-    <div>
+    <div class="container">
         <article v-for="(rest,index) in restaurant" :key="index" class="card w-25 text-center mx-auto p-4 m-4" >
             <h1>
                 {{ rest.name_restaurant }}
@@ -31,141 +31,103 @@
                     </div>
                     <p>Prezzo: €{{ dish.price }}</p>
                     <p>Disponibilità: {{ dish.available ? 'Si' : 'No' }}</p>  
+                    <button type="button" :data-dish-id="dish.id" @click="addClickHandler(dish)" class="btn btn-info">+</button>
                 </article>
             </li>
         </ul>
+
     </div>
 </template>
 
 <script>
 import { useState } from '@/state';
-
 import { store } from '../store.js';
-
 import axios from 'axios';
 
 
 export default {
-
+    
     name: 'AppDishes',
-
     data(){
-
         return{
-
             dishes:null,
-
             store,
-
             useState,
-
             restaurant:null,
-
+            dishesCartList:[],
         };
-        
     },
-
     // setup() {
-
     //     const [restaurants, setRestaurants] = useState([]);
-
     //     return {
-
     //         restaurants, setRestaurants
-
     //     };
-
     // },
-
     methods: {
-
         getDishes() {
-
             axios.get(`http://127.0.0.1:8000/api/restaurants/${this.store.restaurantTargetId}/dishes`)
-
                 .then((response) => {
-
                     // handle success
-
                     console.log(response.data.results);
-
                     this.dishes=response.data.results;
-
                 })
-
                 .catch(function (error) {
-
                     // handle error
-
                     console.log(error);
-
                 })
-
                 .finally(function () {
-
                     // always executed
-
                 });
-
         },
-
         getRestaurant() {
+            axios.get(`http://127.0.0.1:8000/api/restaurants/${this.store.restaurantTargetId}`)
+            .then((response) => {
+                // handle success
+                // console.log(response.data.results);
+                this.restaurant=response.data.results;
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
+        },
+        addClickHandler(dish){
+            // indexOf quando non trova elemento nell'array , mette -1
+            const checkDish = this.dishesCartList.findIndex(element => element.id === dish.id);
+            {{ console.log(checkDish) }}
+            if(checkDish > -1){
+                this.dishesCartList[checkDish].quantity += 1;
+                // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
+                {{ console.log(this.dishesCartList) }}
+                return ;
+            }
+            this.dishesCartList.push({
+                'id' : dish.id,
+                'name': dish.name,
+                'price': dish.price,
+                'quantity': 1
+            });
+            {{ console.log(this.dishesCartList) }}
+            return ; 
 
-    axios.get(`http://127.0.0.1:8000/api/restaurants/${this.store.restaurantTargetId}`)
-
-    .then((response) => {
-
-        // handle success
-
-        // console.log(response.data.results);
-
-        this.restaurant=response.data.results;
-
-    })
-
-    .catch(function (error) {
-
-        // handle error
-
-        console.log(error);
-
-    })
-
-    .finally(function () {
-
-        // always executed
-
-    });
-
-},
-
+        }
     },
-
     // watch: {
-
     //     'store.typeFilter': {
-
     //         handler(newValue, oldValue) {
-
-    //             console.log('paperella');
-
+        //             console.log('paperella');
     //             this.getRestaurants();
-
     //         },
-
     //         deep: true,
-
     //     }
-
     // },
-
     mounted() {
-
         this.getRestaurant();
         this.getDishes();
-        
     }
-
 }
 </script>
 

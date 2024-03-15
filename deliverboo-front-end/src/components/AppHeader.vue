@@ -5,7 +5,6 @@
                     <a class="navbar-brand" href="#">DeliverBoo</a>
                 </div>
             </nav>     
-               
     </header>
 </template>
 
@@ -15,11 +14,9 @@ export default {
     name:'AppHeader',
     data(){
         return{
-           
         }
     },
     methods:{
-     
     }
     
 }
