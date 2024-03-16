@@ -161,22 +161,17 @@ export default {
                 {{ console.log(this.dishesCartList) }}
                 return ;
             }
-            // else if (String(e.target.value).charCodeAt() == NaN) {
-            //     return
-                
-            // }
-            // else if(String(e.target.value).charCodeAt() < 48 || String(e.target.value).charCodeAt() > 57 ||e.target.value < 1){
-            //     e.target.value = 1
-            //     this.dishesCartList[checkDish].quantity = 1
-            //     return;
-            // }
-            e.targetValue = e.target.value
+            else if(String(e.target.value).charCodeAt() < 48 || String(e.target.value).charCodeAt() > 57 ||e.target.value < 1){
+                e.target.value = ''
+                this.dishesCartList[checkDish].quantity = 1
+                return;
+            }
             this.dishesCartList[checkDish].quantity = e.target.value
             console.log(String(e.target.value).charCodeAt())
         },
         pricesSumFunc(){
             if(this.dishesCartList.length == 0){
-                return ;
+                return;
             }
             let result = 0;
             this.dishesCartList.forEach(item => result += Number((parseFloat(item.price) * parseInt(item.quantity))));
