@@ -5,7 +5,8 @@
                 <h4>Seleziona la tipologia del ristorante:</h4>
                     <div class="form-check form-check-inline" v-for="(type,index) in types" :key="index">
                         <input class="form-check-input" type="checkbox" id="type" @click="setTypes(type.name_type)">
-                        <label class="form-check-label" for="type">{{ type.name_type }}</label>
+                        <label class="form-check-label" for="type"></label>
+                        <span>{{ type.name_type }}</span>
                     </div>
             </div>
         <ul class="list-unstyled row">
@@ -84,8 +85,9 @@ export default {
                 this.setTargetType([...this.targetType,type])
                 this.store.typeFilter=this.targetType;
             }else{
-                const newTypes = this.targetType.filter((element, index) => index !== indexType);
-                this.setTargetType([newTypes])
+                const newTypes = [...this.targetType]
+                newTypes.splice(indexType, 1);
+                this.setTargetType([...newTypes])
                 this.store.typeFilter=this.targetType;
             }
             
@@ -114,7 +116,9 @@ export default {
             }
             ary.forEach(element => {
                 element.types.forEach(type => {
-                    if (filterValue.includes(type.name_type)) {
+                    console.log(filterValue)
+                    console.log(filterValue.findIndex((item)=>item == type.name_type)>1)
+                    if (filterValue.findIndex((item)=>item == type.name_type)>-1) {
                         newArray.push(element);
                         return;
                     }
@@ -125,6 +129,7 @@ export default {
         },
             clickHandler(e){
                 this.store.restaurantTargetId = e.target.dataset.restaurantId;
+                localStorage.setItem('restIdTarget', JSON.stringify(e.target.dataset.restaurantId))
                 this.$router.push('/restaurant/dishes')
                 //console.log(e.target.dataset.restaurantId);
             },
@@ -133,7 +138,6 @@ export default {
     watch: {
         'store.typeFilter': {
             handler(newValue, oldValue) {
-                console.log('paperella');
                 console.log(this.store.typeFilter);
                 this.getRestaurants();
             },

@@ -88,11 +88,20 @@ export default {
     //     };
     // },
     methods: {
-        getDishes() {
-            axios.get(`http://127.0.0.1:8000/api/restaurants/${this.store.restaurantTargetId}/dishes`)
+        restaurantIdManager(element) {
+            if(element == ''){
+                console.log(localStorage.getItem('restIdTarget'))
+                return localStorage.getItem('restIdTarget')
+            }
+            return element
+        },
+
+        getDishes(id) {
+            axios.get(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`)
                 .then((response) => {
                     // handle success
                     console.log(response.data.results);
+                    console.log(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`);
                     this.dishes=response.data.results;
                 })
                 .catch(function (error) {
@@ -103,8 +112,8 @@ export default {
                     // always executed
                 });
         },
-        getRestaurant() {
-            axios.get(`http://127.0.0.1:8000/api/restaurants/${this.store.restaurantTargetId}`)
+        getRestaurant(id) {
+            axios.get(`http://127.0.0.1:8000/api/restaurants/${id}`)
             .then((response) => {
                 // handle success
                 // console.log(response.data.results);
@@ -187,8 +196,9 @@ export default {
         }
     },
     mounted() {
-        this.getRestaurant();
-        this.getDishes();
+        let restId = JSON.parse(localStorage.getItem('restIdTarget'))
+        this.getRestaurant(restId);
+        this.getDishes(restId);
     }
 }
 </script>
