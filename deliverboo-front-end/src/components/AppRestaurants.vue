@@ -115,14 +115,23 @@ export default {
                 return ary;
             }
             ary.forEach(element => {
-                element.types.forEach(type => {
+                const valAry = []
+                for (let i = 0; i < element.types.length; i++) {
                     console.log(filterValue)
-                    console.log(filterValue.findIndex((item)=>item == type.name_type)>1)
-                    if (filterValue.findIndex((item)=>item == type.name_type)>-1) {
-                        newArray.push(element);
-                        return;
+                    console.log(filterValue.findIndex((item)=>item == element.types[i].name_type))
+                    if (filterValue.findIndex((item)=>item == element.types[i].name_type) < 0) {
+                        break;
+                    } else if (filterValue.findIndex((item)=>item == element.types[i].name_type) > -1){
+                        valAry.push(element.types[i].name_type);
                     }
-                });
+                }
+                for (let i = 0; i < valAry.length; i++) {
+                    if (filterValue.includes(valAry[i])!== true) {
+                        break;
+                    } else if (valAry.length -1 == i){
+                        newArray.push(element);
+                    }
+                }
             });
             console.log(newArray);
             return newArray;
