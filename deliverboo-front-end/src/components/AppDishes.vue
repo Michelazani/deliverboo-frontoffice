@@ -20,7 +20,7 @@
                 </p>
                 <p>Indirizzo: {{ rest.address_restaurant}}</p>
         </article>
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Vai al carrello</button>
 
         <ul class="list-unstyled row">
             <li v-for="(dish,index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3"> 
@@ -90,7 +90,6 @@ export default {
     methods: {
         restaurantIdManager(element) {
             if(element == ''){
-                console.log(localStorage.getItem('restIdTarget'))
                 return localStorage.getItem('restIdTarget')
             }
             return element
@@ -100,8 +99,6 @@ export default {
             axios.get(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`)
                 .then((response) => {
                     // handle success
-                    console.log(response.data.results);
-                    console.log(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`);
                     this.dishes=response.data.results;
                 })
                 .catch(function (error) {
@@ -127,10 +124,35 @@ export default {
                 // always executed
             });
         },
+        postOrder() {
+            const order = 
+                { 
+                    "restaurant_id": 2, 
+                    "total_price": 50.00, 
+                    "customer_address" :  "Via zanzia 12", 
+                    "customer_name" :  "Vanessa", 
+                    "customer_surname" :  "Rodriguez", 
+                    "date_and_time" :  "2023-05-22 19:00:25", 
+                    "customer_phone" :  "4488552233", 
+                    "customer_email" :  "vanessa@gmail.com"
+                };
+
+            axios.post(`http://127.0.0.1:8000/api/order`, order)
+                .then((response) => {
+                    // handle success
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .finally(function () {
+                    // always executed
+                });
+        },
         addClickHandler(dish){
             // indexOf quando non trova elemento nell'array , mette -1
             const checkDish = this.dishesCartList.findIndex(element => element.id === dish.id);
-            {{ console.log(checkDish) }}
             if(checkDish > -1){
                 this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) + 1;
                 // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
@@ -143,7 +165,6 @@ export default {
                 'price': dish.price,
                 'quantity': 1
             });
-            {{ console.log(this.dishesCartList) }}
             return ; 
         },
         removeClickHandler(e){
@@ -155,11 +176,9 @@ export default {
             const dishId = e.target.dataset.dishCartId;
             const countType = e.target.dataset.countType;
             const checkDish = this.dishesCartList.findIndex(element => element.id == dishId);
-            {{ console.log(this.dishesCartList[checkDish]) }}
             if(countType == '+'){
                 this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) + 1;
                 // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
-                {{ console.log(this.dishesCartList) }}
                 return ;
             }else if(countType == '-'){
                 if(this.dishesCartList[checkDish].quantity == 1){
@@ -167,7 +186,6 @@ export default {
                 }
                 this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) - 1;
                 // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
-                {{ console.log(this.dishesCartList) }}
                 return ;
             }
             else if(String(e.target.value).charCodeAt() < 48 || String(e.target.value).charCodeAt() > 57 ||e.target.value < 1){
@@ -176,7 +194,6 @@ export default {
                 return;
             }
             this.dishesCartList[checkDish].quantity = e.target.value
-            console.log(String(e.target.value).charCodeAt())
         },
         pricesSumFunc(){
             if(this.dishesCartList.length == 0){
@@ -199,6 +216,7 @@ export default {
         let restId = JSON.parse(localStorage.getItem('restIdTarget'))
         this.getRestaurant(restId);
         this.getDishes(restId);
+        this.postOrder();
     }
 }
 </script>
