@@ -125,13 +125,27 @@ export default {
                         valAry.push(element.types[i].name_type);
                     }
                 }
-                for (let i = 0; i < valAry.length; i++) {
-                    if (filterValue.includes(valAry[i])!== true) {
-                        break;
-                    } else if (valAry.length -1 == i){
-                        newArray.push(element);
+                // // for (let i = 0; i < valAry.length; i++) {
+                // //     if (filterValue.includes(valAry[i])!== true) {
+                // //         break;
+                // //     } else if (valAry.length -1 == i){
+                // //         newArray.push(element);
+                // //     }
+                // // }
+                // console.log(valAry)
+                // if(valAry.some(item=> filterValue.includes(item))){
+                //     newArray.push(element);
+                // }
+                const filterValueCopy = [...filterValue];
+                if (filterValueCopy.length !== valAry.length) return;
+                filterValueCopy.sort();
+                valAry.sort();
+                console.log(filterValueCopy);
+                console.log(valAry);
+                    for (let i = 0; i < filterValueCopy.length; i++) {
+                        if (filterValueCopy[i] !== valAry[i]) return;
                     }
-                }
+                    newArray.push(element);
             });
             console.log(newArray);
             return newArray;
