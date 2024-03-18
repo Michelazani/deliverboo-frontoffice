@@ -52,12 +52,13 @@
                                 <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" @input="(e)=>dishQuantityHandler(e)" :value=" dishCart.quantity" >
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
-                            <p class="me-2">€ {{ dishCart.price }}</p>
+                            <p class="me-2">{{ '€'+dishCart.price }}</p>
                             <button type="button"  :data-dish-id="dishCart.id" @click="(e)=>removeClickHandler(e)" class="btn btn-danger btn-sm my-5">X</button>
                         </div>
                     </li>
                 </ul>
-                {{ pricesSumFunc() }}
+                {{'Totale: €'+ pricesSumFunc() }}
+                <button type="button" @click="confCart()">Conferma</button>
             </div>
         </div>
     </div>
@@ -124,31 +125,34 @@ export default {
                 // always executed
             });
         },
-        postOrder() {
-            const order = 
-                { 
-                    "restaurant_id": 2, 
-                    "total_price": 50.00, 
-                    "customer_address" :  "Via zanzia 12", 
-                    "customer_name" :  "Vanessa", 
-                    "customer_surname" :  "Rodriguez", 
-                    "date_and_time" :  "2023-05-22 19:00:25", 
-                    "customer_phone" :  "4488552233", 
-                    "customer_email" :  "vanessa@gmail.com"
-                };
+        // postOrder() {
+        //     const order = 
+        //         { 
+        //             "restaurant_id": 2, 
+        //             "total_price": "50.00", 
+        //             "customer_address" :  "Via zanzia 12", 
+        //             "customer_name" :  "Vanessa", 
+        //             "customer_surname" :  "Rodriguez", 
+        //             "date_and_time" :  "2023-05-22 19:00:25", 
+        //             "customer_phone" :  "4488552233", 
+        //             "customer_email" :  "vanessa@gmail.com"
+        //         };
 
-            axios.post(`http://127.0.0.1:8000/api/order`, order)
-                .then((response) => {
-                    // handle success
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })
-                .finally(function () {
-                    // always executed
-                });
+        //     axios.post(`http://127.0.0.1:8000/api/order`, order)
+        //         .then((response) => {
+        //             // handle success
+        //             console.log(response.config.data);
+        //         })
+        //         .catch(function (error) {
+        //             // handle error
+        //             console.log(error);
+        //         })
+        //         .finally(function () {
+        //             // always executed
+        //         });
+        // },
+        confCart(){
+            localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
         },
         addClickHandler(dish){
             // indexOf quando non trova elemento nell'array , mette -1
@@ -216,7 +220,7 @@ export default {
         let restId = JSON.parse(localStorage.getItem('restIdTarget'))
         this.getRestaurant(restId);
         this.getDishes(restId);
-        this.postOrder();
+        // this.postOrder();
     }
 }
 </script>
