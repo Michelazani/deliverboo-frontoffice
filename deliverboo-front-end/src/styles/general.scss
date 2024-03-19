@@ -1,1 +1,16 @@
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+
+.btn-menu {
+    background-color: #00CCBC; 
+    color: white; /* Testo e icona bianchi */
+
+    &:hover {
+        background-color: #eeeeee; /* Background leggermente più scuro */
+        color: #00CCBC; /* Cambio colore del testo durante l'hover */
+    }
+
+    &:hover i {
+        color: #00CCBC; /* Cambio colore dell'icona durante l'hover */
+    }
+}

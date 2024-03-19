@@ -1,5 +1,8 @@
 <template >
     <div class="container position-relative">
+        <div v-if="showAddToCartNotification" class="alert alert-success position-fixed top-0 start-50 translate-middle-x p-3 m-3" role="alert">
+      Prodotto aggiunto al carrello!
+    </div>
         <article v-for="(rest,index) in restaurant" :key="index" class="card w-25 text-center mx-auto p-4 m-4" >
             <h1>
                 {{ rest.name_restaurant }}
@@ -20,23 +23,26 @@
                 </p>
                 <p>Indirizzo: {{ rest.address_restaurant}}</p>
         </article>
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Vai al carrello</button>
+        
 
-        <ul class="list-unstyled row">
-            <li v-for="(dish,index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3"> 
-                <article class="card text-center mx-auto p-3 w-100" >
-                    <div class="h-50 d-flex justify-content-center align-items-center">
-                        <h2>{{ dish.name }}</h2>
-                    </div>
-                    <div class="card-image">
-                        <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain"  :src="'http://127.0.0.1:8000/storage/' + dish.img_dish" alt="Dish Image"> 
-                    </div>
-                    <p>Prezzo: €{{ dish.price }}</p>
-                    <p>Disponibilità: {{ dish.available ? 'Si' : 'No' }}</p>  
-                    <button type="button" :data-dish-id="dish.id" @click="addClickHandler(dish)" class="btn btn-info btn-sm">+</button>
-                </article>
-            </li>
-        </ul>
+<ul class="list-unstyled row">
+    <li v-for="(dish, index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3"> 
+      <article class="card text-center mx-auto p-3 w-100">
+        <div class="h-50 d-flex justify-content-center align-items-center">
+          <h2>{{ dish.name }}</h2>
+        </div>
+        <div class="card-image">
+          <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain" :src="'http://127.0.0.1:8000/storage/' + dish.img_dish" alt="Dish Image"> 
+        </div>
+        <p class="text-start">Prezzo: €{{ dish.price }}</p>
+        <p class="text-start">Ingredienti: {{ dish.ingredients }}</p>
+        <p class="text-start">Disponibilità: {{ dish.available ? 'Si' : 'No' }}</p>  
+        <button type="button" :data-dish-id="dish.id" @click="addClickHandler(dish); showAddToCartNotification = true" class="btn btn-menu btn-info btn-sm">
+          <i class="fas fa-shopping-cart fa-sm"></i> <span class="ms-2">Aggiungi al carrello</span>
+        </button>
+      </article>
+    </li>
+  </ul>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrello</h5>
@@ -73,138 +79,143 @@
 import { useState } from '@/state';
 import { store } from '../store.js';
 import axios from 'axios';
-
+import { ref } from 'vue'; // Importa il modulo 'ref' per la gestione reattiva
 
 export default {
-    
-    name: 'AppDishes',
-    data(){
-        return{
-            dishes:null,
-            store,
-            useState,
-            restaurant:null,
-            dishesCartList:[],
-        };
-    },
-    // setup() {
-    //     const [restaurants, setRestaurants] = useState([]);
-    //     return {
-    //         restaurants, setRestaurants
-    //     };
-    // },
-    methods: {
-        restaurantIdManager(element) {
-            if(element == ''){
-                return localStorage.getItem('restIdTarget')
-            }
-            return element
-        },
+  name: 'AppDishes',
+  data() {
+    return {
+      dishes: null,
+      store,
+      useState,
+      restaurant: null,
+      dishesCartList: [],
+      showAddToCartNotification: false,
+      cartItemCount: 0, // Aggiungi questa variabile per tenere traccia del numero di elementi nel carrello
+    };
+  },
+  // setup() {
+  //     const [restaurants, setRestaurants] = useState([]);
+  //     return {
+  //         restaurants, setRestaurants
+  //     };
+  // },
+  methods: {
+    // Rimuovi il metodo restaurantIdManager se non è utilizzato
 
-        getDishes(id) {
-            axios.get(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`)
-                .then((response) => {
-                    // handle success
-                    this.dishes=response.data.results;
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })
-                .finally(function () {
-                    // always executed
-                });
-        },
-        getRestaurant(id) {
-            axios.get(`http://127.0.0.1:8000/api/restaurants/${id}`)
-            .then((response) => {
-                // handle success
-                // console.log(response.data.results);
-                this.restaurant=response.data.results;
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .finally(function () {
-                // always executed
-            });
-        },
-        confCart(){
-            localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
-            localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
-            this.$router.push('/ordine')
-        },
-        addClickHandler(dish){
-            // indexOf quando non trova elemento nell'array , mette -1
-            const checkDish = this.dishesCartList.findIndex(element => element.id === dish.id);
-            if(checkDish > -1){
-                this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) + 1;
-                // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
-                {{ console.log(this.dishesCartList) }}
-                return ;
-            }
-            this.dishesCartList.push({
-                'id' : dish.id,
-                'name': dish.name,
-                'price': dish.price,
-                'quantity': 1
-            });
-            return ; 
-        },
-        removeClickHandler(e){
-            // indexOf quando non trova elemento nell'array , mette -1
-            const dishId = e.target.dataset.dishCartId;
-            this.dishesCartList.splice(dishId, 1);
-        },
-        dishQuantityHandler(e){
-            const dishId = e.target.dataset.dishCartId;
-            const countType = e.target.dataset.countType;
-            const checkDish = this.dishesCartList.findIndex(element => element.id == dishId);
-            if(countType == '+'){
-                this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) + 1;
-                // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
-                return ;
-            }else if(countType == '-'){
-                if(this.dishesCartList[checkDish].quantity == 1){
-                    return;
-                }
-                this.dishesCartList[checkDish].quantity = Number(this.dishesCartList[checkDish].quantity) - 1;
-                // se metto il return nell'if, esce automaticamente e non c'è bisogno dell'else
-                return ;
-            }
-            else if(String(e.target.value).charCodeAt() < 48 || String(e.target.value).charCodeAt() > 57 ||e.target.value < 1){
-                e.target.value = ''
-                this.dishesCartList[checkDish].quantity = 1
-                return;
-            }
-            this.dishesCartList[checkDish].quantity = e.target.value
-        },
-        pricesSumFunc(){
-            if(this.dishesCartList.length == 0){
-                return 0.00;
-            }
-            let result = 0;
-            this.dishesCartList.forEach(item => result += Number((parseFloat(item.price) * parseInt(item.quantity))));
-            return result.toFixed(2);
-        }
+    getDishes(id) {
+      axios
+        .get(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`)
+        .then((response) => {
+          this.dishes = response.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    watch: {
-        dishesCartList: {
-            handler(newValue, oldValue) {
-                    console.log(newValue);
-            },
-            deep: true,
-        }
+
+    getRestaurant(id) {
+      axios
+        .get(`http://127.0.0.1:8000/api/restaurants/${id}`)
+        .then((response) => {
+          this.restaurant = response.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    mounted() {
-        let restId = JSON.parse(localStorage.getItem('restIdTarget'))
-        this.getRestaurant(restId);
-        this.getDishes(restId);
-        // this.postOrder();
-    }
-}
+
+    confCart() {
+      localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
+      localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
+      this.updateCartCount();
+      this.$router.push('/ordine');
+    },
+
+    addClickHandler(dish) {
+      const checkDish = this.dishesCartList.findIndex((element) => element.id === dish.id);
+      if (checkDish > -1) {
+        this.dishesCartList[checkDish].quantity += 1;
+      } else {
+        this.dishesCartList.push({
+          id: dish.id,
+          name: dish.name,
+          price: dish.price,
+          quantity: 1,
+        });
+      }
+      this.updateCartCount();
+
+      // Imposta la notifica "Prodotto aggiunto al carrello!" su true
+      this.showAddToCartNotification = true;
+
+      // Reimposta la notifica su false dopo 3 secondi solo se attualmente è visibile
+      if (this.showAddToCartNotification) {
+        setTimeout(() => {
+          this.showAddToCartNotification = false;
+        }, 3000);
+      }
+    },
+
+    removeClickHandler(e) {
+      const dishIdToRemove = e.target.dataset.dishId;
+      const index = this.dishesCartList.findIndex(
+        (dish) => dish.id.toString() === dishIdToRemove
+      );
+      if (index !== -1) {
+        this.dishesCartList.splice(index, 1);
+        this.updateCartCount();
+      }
+    },
+
+    
+
+    dishQuantityHandler(e) {
+      // Implementa la logica per la gestione della quantità dei piatti nel carrello
+      // Assicurati di chiamare updateCartCount se modifichi la quantità
+    },
+
+    pricesSumFunc() {
+      return this.dishesCartList
+        .reduce((acc, dish) => acc + dish.price * dish.quantity, 0)
+        .toFixed(2);
+    },
+
+    updateCartCount() {
+      const totalItems = this.dishesCartList.reduce((acc, dish) => acc + dish.quantity, 0);
+      this.cartItemCount = totalItems;
+      localStorage.setItem('cartItemCount', totalItems);
+      window.dispatchEvent(new CustomEvent('cartUpdated'));
+    },
+  },
+
+  watch: {
+    dishesCartList: {
+      handler(newValue, oldValue) {
+        console.log(newValue);
+        this.updateCartCount();
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    let restId = JSON.parse(localStorage.getItem('restIdTarget'));
+    this.getRestaurant(restId);
+    this.getDishes(restId);
+    // Inizializza il conteggio del badge del carrello quando il componente viene montato
+    this.cartItemCount = localStorage.getItem('cartItemCount') || 0;
+    setTimeout(() => {
+      this.showAddToCartNotification = false;
+    }, 3000);
+  },
+};
 </script>
 
+
 <style lang="scss">
+.alert {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 </style>
