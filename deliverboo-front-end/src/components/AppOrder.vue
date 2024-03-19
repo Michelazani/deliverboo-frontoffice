@@ -2,7 +2,7 @@
     <div class="container">
     <div class="row justify-content-center ">
         <div class="col-7">
-            <form action=''>
+            <!-- <form action='' methods="POST"> -->
 
                 <h2 class="m-4">Ordine</h2>
                 <div class="mb-3 input-group">
@@ -27,20 +27,26 @@
                 </div>
 
                 <div class="mb-3 input-group">
-                    <button type="submit" class="btn btn-primary m-2">
+                    <button type="submit" class="btn btn-primary m-2" @click="(e)=>clickHandler(e)">
                         Conferma il tuo ordine
                     </button>
                 </div>
 
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 </div>
 </template>
 <script>
 export default {
-    name:'AppOrder'
+    name:'AppOrder',
+    methods: {
+        clickHAndler() {
+            this.$router.push('/pagamento')
+        }
+    },
 }
+
 </script>
 <style lang="">
 

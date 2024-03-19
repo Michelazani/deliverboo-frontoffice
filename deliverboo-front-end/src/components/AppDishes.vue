@@ -153,6 +153,7 @@ export default {
         // },
         confCart(){
             localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
+            this.$router.push('/ordine')
         },
         addClickHandler(dish){
             // indexOf quando non trova elemento nell'array , mette -1
