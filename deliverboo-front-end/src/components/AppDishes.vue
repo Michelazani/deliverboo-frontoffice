@@ -130,34 +130,9 @@ export default {
                 // always executed
             });
         },
-        // postOrder() {
-        //     const order = 
-        //         { 
-        //             "restaurant_id": 2, 
-        //             "total_price": "50.00", 
-        //             "customer_address" :  "Via zanzia 12", 
-        //             "customer_name" :  "Vanessa", 
-        //             "customer_surname" :  "Rodriguez", 
-        //             "date_and_time" :  "2023-05-22 19:00:25", 
-        //             "customer_phone" :  "4488552233", 
-        //             "customer_email" :  "vanessa@gmail.com"
-        //         };
-
-        //     axios.post(`http://127.0.0.1:8000/api/order`, order)
-        //         .then((response) => {
-        //             // handle success
-        //             console.log(response.config.data);
-        //         })
-        //         .catch(function (error) {
-        //             // handle error
-        //             console.log(error);
-        //         })
-        //         .finally(function () {
-        //             // always executed
-        //         });
-        // },
         confCart(){
             localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
+            localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
             this.$router.push('/ordine')
         },
         addClickHandler(dish){
