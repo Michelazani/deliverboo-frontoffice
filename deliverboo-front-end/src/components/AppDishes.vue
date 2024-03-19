@@ -23,18 +23,21 @@
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Vai al carrello</button>
 
         <ul class="list-unstyled row">
-            <li v-for="(dish,index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3"> 
-                <article class="card text-center mx-auto p-3 w-100" >
-                    <div class="h-50 d-flex justify-content-center align-items-center">
-                        <h2>{{ dish.name }}</h2>
-                    </div>
-                    <div class="card-image">
-                        <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain"  :src="'http://127.0.0.1:8000/storage/' + dish.img_dish" alt="Dish Image"> 
-                    </div>
-                    <p>Prezzo: €{{ dish.price }}</p>
-                    <p>Disponibilità: {{ dish.available ? 'Si' : 'No' }}</p>  
-                    <button type="button" :data-dish-id="dish.id" @click="addClickHandler(dish)" class="btn btn-info btn-sm">+</button>
-                </article>
+            <li v-for="(dish,index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3 "> 
+                <article class="card text-center mx-auto p-3 w-100 border border-secondary-subtle d-flex flex-row position-relative my_article">
+                    
+                        <div class="d-flex justify-content-center align-items-center flex-column me-4">
+                            <h2 class="fs-4 text">{{ dish.name }}</h2>
+                            <p>Prezzo: €{{ dish.price }}</p>
+                            <p>Disponibilità: {{ dish.available ? 'Si' : 'No' }}</p>
+                        </div>
+                        <div class="card-image my_container_img mb-5">
+                            <img class="img-fluid"  :src="'http://127.0.0.1:8000/storage/' + dish.img_dish" alt="Dish Image"> 
+                        </div> 
+                        <div class="position-absolute add-button-position">
+                            <button type="button" :data-dish-id="dish.id" @click="addClickHandler(dish)" class="btn btn-info rounded-circle d-flex justify-content-center align-items-center my_btn">+</button>
+                        </div>
+                    </article>
             </li>
         </ul>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -53,7 +56,7 @@
                         <div class="d-flex">
                             <p class="me-2">{{ dishCart.name }}</p>
                             <div class="d-flex input-group my-5 text-center">
-                                <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">+</button>
+                                <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text " @click="(e)=>dishQuantityHandler(e)">+</button>
                                 <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" @input="(e)=>dishQuantityHandler(e)" :value=" dishCart.quantity" >
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
@@ -206,5 +209,33 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+    article.my_article:hover {
+        background-color: rgb(202, 202, 202);
+    }
+
+    article button {
+        height: 2rem;
+        width: 2rem;
+        text-align: center;
+    }
+
+    .add-button-position {
+        top: 100px;
+    }
+
+    img {
+        object-fit: cover;
+        height: 10rem;
+        width: 10rem;
+    }
+    button.my_btn {
+        position: relative;
+        top: 6rem;
+        left: 15rem;
+    }
+    .my_container_img {
+        border: 1px solid black;
+
+    }
 </style>
