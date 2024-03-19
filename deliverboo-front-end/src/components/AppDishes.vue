@@ -39,11 +39,16 @@
         </ul>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrello:</h5>
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrello</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body" >
-                <ul class="list-group">
+            <div class="offcanvas-body">
+                <ul class="list-group" v-if="dishesCartList.length == 0">
+                    <li class="list-group-item">
+                        <p class="text-muted">Il carrello è vuoto</p>
+                    </li>
+                </ul>
+                <ul class="list-group" v-else">
                     <li v-for="(dishCart, index) in dishesCartList" :key="index" class="list-group-item">
                         <div class="d-flex">
                             <p class="me-2">{{ dishCart.name }}</p>
@@ -58,7 +63,7 @@
                     </li>
                 </ul>
                 <p class="mt-3">{{'Totale: €'+ pricesSumFunc() }}</p>
-                <button class="btn btn-success"  @click="confCart()">Vai al pagamento</button>
+                <button :class="dishesCartList.length == 0?'d-none':'btn btn-success'"  @click="confCart()">Vai al pagamento</button>
             </div>
         </div>
     </div>
@@ -125,34 +130,9 @@ export default {
                 // always executed
             });
         },
-        // postOrder() {
-        //     const order = 
-        //         { 
-        //             "restaurant_id": 2, 
-        //             "total_price": "50.00", 
-        //             "customer_address" :  "Via zanzia 12", 
-        //             "customer_name" :  "Vanessa", 
-        //             "customer_surname" :  "Rodriguez", 
-        //             "date_and_time" :  "2023-05-22 19:00:25", 
-        //             "customer_phone" :  "4488552233", 
-        //             "customer_email" :  "vanessa@gmail.com"
-        //         };
-
-        //     axios.post(`http://127.0.0.1:8000/api/order`, order)
-        //         .then((response) => {
-        //             // handle success
-        //             console.log(response.config.data);
-        //         })
-        //         .catch(function (error) {
-        //             // handle error
-        //             console.log(error);
-        //         })
-        //         .finally(function () {
-        //             // always executed
-        //         });
-        // },
         confCart(){
             localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
+            localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
             this.$router.push('/ordine')
         },
         addClickHandler(dish){
@@ -202,7 +182,7 @@ export default {
         },
         pricesSumFunc(){
             if(this.dishesCartList.length == 0){
-                return;
+                return 0.00;
             }
             let result = 0;
             this.dishesCartList.forEach(item => result += Number((parseFloat(item.price) * parseInt(item.quantity))));
