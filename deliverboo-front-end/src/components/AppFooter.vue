@@ -4,8 +4,8 @@
             <div class="d-flex flex-column">
                 <span class="fw-bold fs-5 mb-2">Scopri Deliverboo</span>
                 <a class="text-decoration-none" href="*">Investitori</a>
-                <a class="text-decoration-none" href="*">Chi siamo</a>
-                <a class="text-decoration-none" href="*">Ristoranti</a>
+                <a class="text-decoration-none" href="/chisiamo">Chi siamo</a>
+                <a class="text-decoration-none" href="/">Ristoranti</a>
                 <a class="text-decoration-none" href="*">Altro</a>
                 <a class="text-decoration-none" href="*">Pressroom</a>
                 <a class="text-decoration-none" href="*">Programmazione</a>

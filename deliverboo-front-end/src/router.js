@@ -3,11 +3,18 @@ import AppRestaurants from './components/AppRestaurants.vue';
 import AppDishes from './components/AppDishes.vue';
 import AppPagamento from './components/AppPagamento.vue';
 import AppOrder from './components/AppOrder.vue';
+import ChiSiamo from './components/ChiSiamo.vue';
+import AppJumbo from './components/AppJumbo.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
             {
                 path: '/',
+                name: 'homepage',
+                component: AppJumbo
+            },
+            {
+                path: '/restaurants',
                 name: 'restaurants',
                 component: AppRestaurants
             },
@@ -26,6 +33,16 @@ const router = createRouter({
                 name: 'pagamento',
                 component: AppPagamento
             },
+            {
+                path: '/chisiamo',
+                name: 'chisiamo',
+                component: ChiSiamo
+            },
+            // {
+            //     path: '/chisiamo',
+            //     name: 'chisiamo',
+            //     component: ChiSiamo
+            // },
 
         ]
     });
