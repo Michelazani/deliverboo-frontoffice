@@ -41,7 +41,7 @@
 export default {
     name:'AppOrder',
     methods: {
-        clickHAndler() {
+        clickHandler() {
             this.$router.push('/pagamento')
         }
     },
