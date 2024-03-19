@@ -29,7 +29,6 @@
                     <a class="text-decoration-none" href="*">FAQ</a>
                     <a class="text-decoration-none" href="*">Tipi di cucina</a>
                 </div>
-            </div>
         </section>
         <section class="bottom-footer d-flex justify-content-between align-items-center pb-5">
 
