@@ -65,8 +65,8 @@
                         </div>
                     </li>
                 </ul>
-                <p class="mt-3">{{'Totale: €'+ pricesSumFunc() }}</p>
-                <button :class="dishesCartList.length == 0?'d-none':'btn btn-success'"  @click="confCart()">Vai al pagamento</button>
+                <p class="mt-3">Totale: €{{ pricesSumFunc() }}</p>
+<button :class="dishesCartList.length == 0 ? 'd-none' : 'btn btn-success'" @click="confCart()">Vai al pagamento</button>
             </div>
         </div>
     </div>
@@ -133,11 +133,11 @@ export default {
                 // always executed
             });
         },
-        confCart(){
-            localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
-            localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
-            this.$router.push('/ordine')
-        },
+        confCart() {
+    localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
+    localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
+    this.$router.push('/ordine');
+},
         addClickHandler(dish){
             // indexOf quando non trova elemento nell'array , mette -1
             const checkDish = this.dishesCartList.findIndex(element => element.id === dish.id);
