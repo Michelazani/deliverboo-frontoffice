@@ -7,6 +7,9 @@
 </template>
 
 <script>
+import { router } from '@/router';
+import axios from 'axios';
+
 
 export default {
     name: "appPagamento",
@@ -26,7 +29,19 @@ export default {
                 instance.requestPaymentMethod(function (err, payload) {
                     // Submit payload.nonce to your server
                     if(err == null){
-                        // this.$router.push("/");
+                        axios.post(`http://127.0.0.1:8000/api/order`, JSON.parse(localStorage.getItem('fullOrder')))
+                        .then((response) => {
+                            // handle success
+                            console.log(response.config.data);
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+                        .finally(function () {
+                            // always executed
+                        });
+                        router.push({name: 'restaurants'});
                     }
                 });
             })
