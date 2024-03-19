@@ -7,7 +7,9 @@
 </template>
 
 <script>
+
 export default {
+    name: "appPagamento",
     mounted() {
         let button = document.querySelector('#submit-button');
 
@@ -23,6 +25,9 @@ export default {
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
                     // Submit payload.nonce to your server
+                    if(err == null){
+                        // this.$router.push("/");
+                    }
                 });
             })
         });
