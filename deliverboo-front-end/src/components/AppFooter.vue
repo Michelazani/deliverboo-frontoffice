@@ -1,19 +1,18 @@
 <template >
     <footer>
-        <section class="py-5">
-            <div class="d-flex justify-content-evenly upper-footer">
-                <div class="d-flex flex-column rounded ">
-                    <span class="fw-bold fs-5 mb-2 text-white">Scopri Deliverboo</span>
-                    <a class="text-decoration-none" href="*">Investitori</a>
-                    <a class="text-decoration-none" href="*">Chi siamo</a>
-                    <a class="text-decoration-none" href="*">Ristoranti</a>
-                    <a class="text-decoration-none" href="*">Altro</a>
-                    <a class="text-decoration-none" href="*">Pressroom</a>
-                    <a class="text-decoration-none" href="*">Programmazione</a>
-                    <a class="text-decoration-none" href="*">Design</a>
-                    <a class="text-decoration-none" href="*">Lavora con noi</a>
-                    <a class="text-decoration-none" href="*">Diventa nostro partner</a>
-                </div>
+        <section class="upper-footer d-flex justify-content-evenly py-4">
+            <div class="d-flex flex-column">
+                <span class="fw-bold fs-5 mb-2">Scopri Deliverboo</span>
+                <a class="text-decoration-none" href="*">Investitori</a>
+                <a class="text-decoration-none" href="/chisiamo">Chi siamo</a>
+                <a class="text-decoration-none" href="/">Ristoranti</a>
+                <a class="text-decoration-none" href="*">Altro</a>
+                <a class="text-decoration-none" href="*">Pressroom</a>
+                <a class="text-decoration-none" href="*">Programmazione</a>
+                <a class="text-decoration-none" href="*">Design</a>
+                <a class="text-decoration-none" href="*">Lavora con noi</a>
+                <a class="text-decoration-none" href="*">Diventa nostro partner</a>
+            </div>
 
                 <div class="d-flex flex-column rounded">
                     <span class="fw-bold fs-5 mb-2 text-white">Note legali</span>
@@ -30,7 +29,6 @@
                     <a class="text-decoration-none" href="*">FAQ</a>
                     <a class="text-decoration-none" href="*">Tipi di cucina</a>
                 </div>
-            </div>
         </section>
         <section class="bottom-footer d-flex justify-content-between align-items-center pb-5">
 
