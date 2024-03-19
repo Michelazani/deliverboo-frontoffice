@@ -14,27 +14,27 @@
                 <a class="text-decoration-none" href="*">Diventa nostro partner</a>
             </div>
 
-            <div class="d-flex flex-column">
-                <span class="fw-bold fs-5 mb-2">Note legali</span>
-                <a class="text-decoration-none" href="*">Termini & Condizioni</a>
-                <a class="text-decoration-none" href="*">Informativa sulla privacy</a>
-                <a class="text-decoration-none" href="*">Cookies</a>
-                <a class="text-decoration-none" href="*">Classificazione dei partner</a>
-                <a class="text-decoration-none" href="*">Richieste da parte delle Auotorità Pubbliche</a>
-            </div>
+                <div class="d-flex flex-column rounded">
+                    <span class="fw-bold fs-5 mb-2 text-white">Note legali</span>
+                    <a class="text-decoration-none" href="*">Termini & Condizioni</a>
+                    <a class="text-decoration-none" href="*">Informativa sulla privacy</a>
+                    <a class="text-decoration-none" href="*">Cookies</a>
+                    <a class="text-decoration-none" href="*">Classificazione dei partner</a>
+                    <a class="text-decoration-none" href="*">Richieste da parte delle Auotorità Pubbliche</a>
+                </div>
 
-            <div class="d-flex flex-column">
-                <span class="fw-bold fs-5 mb-2">Aiuto</span>
-                <a class="text-decoration-none" href="*">Contatti</a>
-                <a class="text-decoration-none" href="*">FAQ</a>
-                <a class="text-decoration-none" href="*">Tipi di cucina</a>
+                <div class="d-flex flex-column rounded">
+                    <span class="fw-bold fs-5 mb-2 text-white">Aiuto</span>
+                    <a class="text-decoration-none" href="*">Contatti</a>
+                    <a class="text-decoration-none" href="*">FAQ</a>
+                    <a class="text-decoration-none" href="*">Tipi di cucina</a>
+                </div>
             </div>
-
         </section>
-        <section class="bottom-footer d-flex justify-content-around align-items-center py-4">
+        <section class="bottom-footer d-flex justify-content-between align-items-center pb-5">
 
             <div>
-                <span>&#169 Copyright 2023 - 2024</span>
+                <span class="text-white">&#169 Copyright 2023 - 2024</span>
             </div>
 
             <div class="ps-2">
@@ -55,21 +55,45 @@
 
 <style lang="scss">
     footer {
-        border: 1px solid red;
+        background-color: rgb(46, 51, 51);
     }
+
     .upper-footer {
         height: 80%;
     }
-    a {
+
+    .upper-footer a {
         text-decoration: none;
         margin-bottom: 0.2rem;
+        color: white;
     }
-    .bottom-footer {
-        border: 1px solid red;
+
+    .upper-footer a:hover {
+        color: rgb(0, 204, 188);
     }
 
     i {
-        margin-right: 0.5rem;
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    i:hover {
+        color: rgb(0, 204, 188);
+    }
+
+    .upper-footer div {
+        background-color: rgb(67, 72, 72);
+        width: 20rem;
+        padding: 1rem;
+    }
+
+    section.bottom-footer div:first-child span {
+        margin-left: 143px;
+    }
+
+    section.bottom-footer div:last-child {
+        margin-right: 143px;
     }
 
 
