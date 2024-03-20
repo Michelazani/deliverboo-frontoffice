@@ -59,7 +59,7 @@
                         <div class="d-flex">
                             <p class="me-2">{{ dishCart.name }}</p>
                             <div class="d-flex input-group my-5 text-center">
-                                <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">+</button>
+                                <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text " @click="(e)=>dishQuantityHandler(e)">+</button>
                                 <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" @input="(e)=>dishQuantityHandler(e)" :value=" dishCart.quantity" >
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
@@ -68,8 +68,8 @@
                         </div>
                     </li>
                 </ul>
-                <p class="mt-3">{{'Totale: €'+ pricesSumFunc() }}</p>
-                <button :class="dishesCartList.length == 0?'d-none':'btn btn-success'"  @click="confCart()">Vai al pagamento</button>
+                <p class="mt-3">Totale: €{{ pricesSumFunc() }}</p>
+<button :class="dishesCartList.length == 0 ? 'd-none' : 'btn btn-success'" @click="confCart()">Vai al pagamento</button>
             </div>
         </div>
     </div>

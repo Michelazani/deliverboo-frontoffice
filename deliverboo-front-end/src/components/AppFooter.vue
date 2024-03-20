@@ -2,7 +2,7 @@
     <footer>
         <section class="upper-footer d-flex justify-content-evenly py-4">
             <div class="d-flex flex-column">
-                <span class="fw-bold fs-5 mb-2">Scopri Deliverboo</span>
+                <span class="fw-bold fs-5 mb-2 text-white">Scopri Deliverboo</span>
                 <a class="text-decoration-none" href="*">Investitori</a>
                 <a class="text-decoration-none" href="/chisiamo">Chi siamo</a>
                 <a class="text-decoration-none" href="/">Ristoranti</a>
@@ -52,7 +52,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     footer {
         background-color: rgb(46, 51, 51);
     }
