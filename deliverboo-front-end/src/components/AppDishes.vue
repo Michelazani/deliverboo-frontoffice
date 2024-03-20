@@ -7,10 +7,10 @@
             <h1>
                 {{ rest.name_restaurant }}
             </h1>
-            <div class="card-image">
+            <div class="card-image mt-3">
                 <img class="img-thumbnail" :src="'http://127.0.0.1:8000/storage/' + rest.image_restaurant" alt="Dish Image">
             </div>
-                <p>
+                <p class="mt-3">
                     Tipo: 
                     <span v-for="(type, index) in rest.types" :key="index">
                         <span v-if="index == rest.types.length - 1">

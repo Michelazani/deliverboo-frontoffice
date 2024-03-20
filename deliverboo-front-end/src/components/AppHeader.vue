@@ -7,7 +7,7 @@
             <router-link class="navbar-brand" to="/restaurants" @click="resetCartCount">Ristoranti</router-link>
             <a class="navbar-brand" href="http://127.0.0.1:8000/login">Area ristoratore</a>
             <router-link class="navbar-brand" to="/chisiamo">Chi Siamo</router-link>
-            <button v-if="showCart" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <button v-if="showCart" class="btn my_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
               Vai al carrello <span class="badge bg-secondary">{{ cartItemCount }}</span>
             </button>
           </div>
@@ -43,14 +43,14 @@
       updateCartItemCount() {
         const itemCount = localStorage.getItem('cartItemCount');
         this.cartItemCount = itemCount ? parseInt(itemCount) : 0;
-      },
-      updateShowCartFlag(route) {
+        },
+        updateShowCartFlag(route) {
         this.showCart = route.name === 'dishes'; // Mostra il carrello solo nella vista dei piatti
-      },
-      resetCartCount() {
+        },
+        resetCartCount() {
         localStorage.setItem('cartItemCount', '0'); // Resetta il conteggio del carrello
         this.updateCartItemCount(); // Aggiorna il conteggio del carrello nel componente
-      }
+        }
     }
   };
   </script>
@@ -59,5 +59,14 @@
   .header-with-border {
     border-bottom: 5px solid #00CCBC; /* Aggiungi il bordo verde acqua nella parte inferiore */
   }
+  button.my_btn{
+    background-color: #00CCBC;
+  }
+  button.my_btn:hover{
+    color: white;
+    background-color: #00CCBC;
+    
+  }
+
   </style>
   
