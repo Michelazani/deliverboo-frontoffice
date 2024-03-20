@@ -1,9 +1,9 @@
 <template >
     <div class="container position-relative">
-        <div v-if="showAddToCartNotification" class="alert alert-success position-fixed top-0 start-50 translate-middle-x p-3 m-3" role="alert">
+        <div v-if="showAddToCartNotification" class="alert alert-success position-fixed z-3 top-0 start-50 translate-middle-x p-3 m-3" role="alert">
       Prodotto aggiunto al carrello!
     </div>
-        <article v-for="(rest,index) in restaurant" :key="index" class="card w-25 text-center mx-auto p-4 m-4" >
+        <article v-for="(rest,index) in restaurant" :key="index" class="card text-center mx-auto p-4 m-4" >
             <h1>
                 {{ rest.name_restaurant }}
             </h1>
@@ -26,8 +26,8 @@
         
 
 <ul class="list-unstyled row">
-    <li v-for="(dish, index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3"> 
-      <article class="card text-center mx-auto p-3 w-100">
+    <li v-for="(dish, index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center px-auto py-3"> 
+      <article class="card text-center p-3 w-100">
         <div class="h-50 d-flex justify-content-center align-items-center">
           <h2>{{ dish.name }}</h2>
         </div>
@@ -42,7 +42,7 @@
         </button>
       </article>
     </li>
-  </ul>
+    </ul>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrello</h5>
@@ -54,22 +54,22 @@
                         <p class="text-muted">Il carrello è vuoto</p>
                     </li>
                 </ul>
-                <ul class="list-group" v-else">
+                <ul class="list-group" v-else>
                     <li v-for="(dishCart, index) in dishesCartList" :key="index" class="list-group-item">
-                        <div class="d-flex">
-                            <p class="me-2">{{ dishCart.name }}</p>
-                            <div class="d-flex input-group my-5 text-center">
+                        <div class="d-flex align-items-center">
+                            <p class="me-2 my-0">{{ dishCart.name }}</p>
+                            <div class="d-flex justify-content-center input-group my-5 text-center">
                                 <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text " @click="(e)=>dishQuantityHandler(e)">+</button>
                                 <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" @input="(e)=>dishQuantityHandler(e)" :value=" dishCart.quantity" >
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
-                            <p class="me-2">{{ '€'+dishCart.price }}</p>
+                            <p class="me-2 my-0">{{ '€'+dishCart.price }}</p>
                             <button type="button"  :data-dish-id="dishCart.id" @click="(e)=>removeClickHandler(e)" class="btn btn-danger btn-sm my-5">X</button>
                         </div>
                     </li>
                 </ul>
                 <p class="mt-3">Totale: €{{ pricesSumFunc() }}</p>
-<button :class="dishesCartList.length == 0 ? 'd-none' : 'btn btn-success'" @click="confCart()">Vai al pagamento</button>
+                <button :class="dishesCartList.length == 0 ? 'd-none' : 'btn btn-success'" @click="(e)=>confCart(e)">Vai al pagamento</button>
             </div>
         </div>
     </div>
@@ -125,11 +125,18 @@ export default {
         });
     },
 
-    confCart() {
-      localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
-      localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
-      this.updateCartCount();
-      this.$router.push('/ordine');
+    confCart(e) {
+        localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
+        localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
+        this.updateCartCount();
+        const body = e.target.closest('body');
+        console.log(body);
+        body.removeAttribute('style');
+        // div.removeAttribute('aria-modal');
+        // div.removeAttribute('role');
+        // div.classList.remove('show');
+        // console.log(div);
+        this.$router.push('/ordine');
     },
 
     addClickHandler(dish) {
