@@ -3,7 +3,7 @@
         <div v-if="showAddToCartNotification" class="alert alert-success position-fixed top-0 start-50 translate-middle-x p-3 m-3" role="alert">
       Prodotto aggiunto al carrello!
     </div>
-        <article v-for="(rest,index) in restaurant" :key="index" class="card w-25 text-center mx-auto p-4 m-4" >
+        <article v-for="(rest,index) in restaurant" :key="index" class="card text-center mx-auto p-4 m-4" >
             <h1>
                 {{ rest.name_restaurant }}
             </h1>
@@ -26,8 +26,8 @@
         
 
 <ul class="list-unstyled row">
-    <li v-for="(dish, index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center p-3"> 
-      <article class="card text-center mx-auto p-3 w-100">
+    <li v-for="(dish, index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center px-auto py-3"> 
+      <article class="card text-center p-3 w-100">
         <div class="h-50 d-flex justify-content-center align-items-center">
           <h2>{{ dish.name }}</h2>
         </div>
