@@ -1,6 +1,6 @@
 <template >
     <div class="container position-relative">
-        <div v-if="showAddToCartNotification" class="alert alert-success position-fixed top-0 start-50 translate-middle-x p-3 m-3" role="alert">
+        <div v-if="showAddToCartNotification" class="alert alert-success position-fixed z-3 top-0 start-50 translate-middle-x p-3 m-3" role="alert">
       Prodotto aggiunto al carrello!
     </div>
         <article v-for="(rest,index) in restaurant" :key="index" class="card text-center mx-auto p-4 m-4" >
