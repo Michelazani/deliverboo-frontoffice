@@ -1,22 +1,22 @@
 <template>
     <header class="header-with-border">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container d-flex justify-content-between">
-          <router-link class="navbar-brand" to="/" exact>DeliverBoo</router-link>
-          <div class="d-flex align-items-center">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container ">
+            <router-link class="navbar-brand" to="/" exact>DeliverBoo</router-link>
+            <div class="d-flex align-items-center">
             <router-link class="navbar-brand" to="/restaurants" @click="resetCartCount">Ristoranti</router-link>
             <a class="navbar-brand" href="http://127.0.0.1:8000/login">Area ristoratore</a>
             <button v-if="showCart" class="btn my_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <i class="fas fa-shopping-cart fa-sm w-100"></i>
             </button>
-          </div>
-        </div>
-      </nav>
+            </div>
+</div>
+        </nav>
     </header>
-  </template>
-  
-  <script>
-  export default {
+    </template>
+
+<script>
+    export default {
     name: 'AppHeader',
     data() {
       return {
