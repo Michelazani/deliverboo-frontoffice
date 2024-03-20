@@ -82,48 +82,48 @@ import axios from 'axios';
 import { ref } from 'vue'; // Importa il modulo 'ref' per la gestione reattiva
 
 export default {
-  name: 'AppDishes',
-  data() {
-    return {
-      dishes: null,
-      store,
-      useState,
-      restaurant: null,
-      dishesCartList: [],
-      showAddToCartNotification: false,
-      cartItemCount: 0, // Aggiungi questa variabile per tenere traccia del numero di elementi nel carrello
-    };
+name: 'AppDishes',
+data() {
+  return {
+    dishes: null,
+    store,
+    useState,
+    restaurant: null,
+    dishesCartList: [],
+    showAddToCartNotification: false,
+    cartItemCount: 0, // Aggiungi questa variabile per tenere traccia del numero di elementi nel carrello
+  };
+},
+// setup() {
+//     const [restaurants, setRestaurants] = useState([]);
+//     return {
+//         restaurants, setRestaurants
+//     };
+// },
+methods: {
+  // Rimuovi il metodo restaurantIdManager se non è utilizzato
+
+  getDishes(id) {
+    axios
+      .get(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`)
+      .then((response) => {
+        this.dishes = response.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
-  // setup() {
-  //     const [restaurants, setRestaurants] = useState([]);
-  //     return {
-  //         restaurants, setRestaurants
-  //     };
-  // },
-  methods: {
-    // Rimuovi il metodo restaurantIdManager se non è utilizzato
 
-    getDishes(id) {
-      axios
-        .get(`http://127.0.0.1:8000/api/restaurants/${id}/dishes`)
-        .then((response) => {
-          this.dishes = response.data.results;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    getRestaurant(id) {
-      axios
-        .get(`http://127.0.0.1:8000/api/restaurants/${id}`)
-        .then((response) => {
-          this.restaurant = response.data.results;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  getRestaurant(id) {
+    axios
+      .get(`http://127.0.0.1:8000/api/restaurants/${id}`)
+      .then((response) => {
+        this.restaurant = response.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
 
     confCart(e) {
         localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
@@ -139,90 +139,100 @@ export default {
         this.$router.push('/ordine');
     },
 
-    addClickHandler(dish) {
-      const checkDish = this.dishesCartList.findIndex((element) => element.id === dish.id);
-      if (checkDish > -1) {
-        this.dishesCartList[checkDish].quantity += 1;
-      } else {
-        this.dishesCartList.push({
-          id: dish.id,
-          name: dish.name,
-          price: dish.price,
-          quantity: 1,
-        });
-      }
+  addClickHandler(dish) {
+    const checkDish = this.dishesCartList.findIndex((element) => element.id === dish.id);
+    if (checkDish > -1) {
+      this.dishesCartList[checkDish].quantity += 1;
+    } else {
+      this.dishesCartList.push({
+        id: dish.id,
+        name: dish.name,
+        price: dish.price,
+        quantity: 1,
+      });
+    }
+    this.updateCartCount();
+
+    // Imposta la notifica "Prodotto aggiunto al carrello!" su true
+    this.showAddToCartNotification = true;
+
+    // Reimposta la notifica su false dopo 3 secondi solo se attualmente è visibile
+    if (this.showAddToCartNotification) {
+      setTimeout(() => {
+        this.showAddToCartNotification = false;
+      }, 3000);
+    }
+  },
+
+  removeClickHandler(e) {
+    const dishIdToRemove = e.target.dataset.dishId;
+    const index = this.dishesCartList.findIndex(
+      (dish) => dish.id.toString() === dishIdToRemove
+    );
+    if (index !== -1) {
+      this.dishesCartList.splice(index, 1);
       this.updateCartCount();
-
-      // Imposta la notifica "Prodotto aggiunto al carrello!" su true
-      this.showAddToCartNotification = true;
-
-      // Reimposta la notifica su false dopo 3 secondi solo se attualmente è visibile
-      if (this.showAddToCartNotification) {
-        setTimeout(() => {
-          this.showAddToCartNotification = false;
-        }, 3000);
-      }
-    },
-
-    removeClickHandler(e) {
-      const dishIdToRemove = e.target.dataset.dishId;
-      const index = this.dishesCartList.findIndex(
-        (dish) => dish.id.toString() === dishIdToRemove
-      );
-      if (index !== -1) {
-        this.dishesCartList.splice(index, 1);
-        this.updateCartCount();
-      }
-    },
-
-    
-
-    dishQuantityHandler(e) {
-      // Implementa la logica per la gestione della quantità dei piatti nel carrello
-      // Assicurati di chiamare updateCartCount se modifichi la quantità
-    },
-
-    pricesSumFunc() {
-      return this.dishesCartList
-        .reduce((acc, dish) => acc + dish.price * dish.quantity, 0)
-        .toFixed(2);
-    },
-
-    updateCartCount() {
-      const totalItems = this.dishesCartList.reduce((acc, dish) => acc + dish.quantity, 0);
-      this.cartItemCount = totalItems;
-      localStorage.setItem('cartItemCount', totalItems);
-      window.dispatchEvent(new CustomEvent('cartUpdated'));
-    },
+    }
   },
 
-  watch: {
-    dishesCartList: {
-      handler(newValue, oldValue) {
-        console.log(newValue);
-        this.updateCartCount();
-      },
-      deep: true,
+  
+
+  dishQuantityHandler(e) {
+const dishId = e.target.dataset.dishCartId;
+const countType = e.target.dataset.countType;
+const index = this.dishesCartList.findIndex((dish) => dish.id.toString() === dishId);
+
+if (index !== -1) {
+  if (countType === "+") {
+    this.dishesCartList[index].quantity++;
+  } else if (countType === "-" && this.dishesCartList[index].quantity > 1) {
+    this.dishesCartList[index].quantity--;
+  }
+  this.updateCartCount();
+}
+},
+
+  pricesSumFunc() {
+    return this.dishesCartList
+      .reduce((acc, dish) => acc + dish.price * dish.quantity, 0)
+      .toFixed(2);
+  },
+
+  updateCartCount() {
+    const totalItems = this.dishesCartList.reduce((acc, dish) => acc + dish.quantity, 0);
+    this.cartItemCount = totalItems;
+    localStorage.setItem('cartItemCount', totalItems);
+    window.dispatchEvent(new CustomEvent('cartUpdated'));
+  },
+},
+
+watch: {
+  dishesCartList: {
+    handler(newValue, oldValue) {
+      console.log(newValue);
+      this.updateCartCount();
     },
+    deep: true,
   },
-  mounted() {
-    let restId = JSON.parse(localStorage.getItem('restIdTarget'));
-    this.getRestaurant(restId);
-    this.getDishes(restId);
-    // Inizializza il conteggio del badge del carrello quando il componente viene montato
-    this.cartItemCount = localStorage.getItem('cartItemCount') || 0;
-    setTimeout(() => {
-      this.showAddToCartNotification = false;
-    }, 3000);
-  },
+},
+mounted() {
+  let restId = JSON.parse(localStorage.getItem('restIdTarget'));
+  this.getRestaurant(restId);
+  this.getDishes(restId);
+  // Inizializza il conteggio del badge del carrello quando il componente viene montato
+  this.cartItemCount = localStorage.getItem('cartItemCount') || 0;
+  setTimeout(() => {
+    this.showAddToCartNotification = false;
+  }, 3000);
+},
 };
 </script>
 
 
 <style lang="scss">
 .alert {
-  left: 50%;
-  transform: translateX(-50%);
+left: 50%;
+transform: translateX(-50%);
 }
 
 </style>
