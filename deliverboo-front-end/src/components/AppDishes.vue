@@ -27,9 +27,9 @@
 
 <ul class="list-unstyled row">
     <li v-for="(dish, index) in dishes" :key="index" class="col-sm-6 col-md-3 d-flex justify-content-center px-auto py-3"> 
-      <article class="card text-center p-3 w-100">
+        <article class="card text-center p-3 w-100">
         <div class="h-50 d-flex justify-content-center align-items-center">
-          <h2>{{ dish.name }}</h2>
+            <h2>{{ dish.name }}</h2>
         </div>
         <div class="card-image">
           <img class="img-fluid mb-3 mt-3" style="height: 15rem; object-fit:contain" :src="'http://127.0.0.1:8000/storage/' + dish.img_dish" alt="Dish Image"> 
