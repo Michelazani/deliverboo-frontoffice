@@ -1,5 +1,5 @@
 <template>
-    <section class="container-fluid col-10 p-5" style="background-color: #f8f9fa;">
+    <section class="container-fluid col-10 p-5" style="background-color: #f8f9fa;" @change.once="postFullCart()">
       <div class="text-center">
         <i class="fas fa-check-circle fa-5x text-success"></i>
         <h2 class="p-3">Grazie per il tuo pagamento!</h2>
@@ -10,8 +10,25 @@
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
-    name: 'ThankYou'
+    name: 'ThankYou',
+    methods:{
+      postFullCart(){
+        axios.post(`http://127.0.0.1:8000/api/order`, JSON.parse(localStorage.getItem('fullOrder')))
+              .then((response) => {
+                // handle success
+                console.log(response);
+              })
+              .catch((error) => {
+                // handle error
+                console.log(error);
+              })
+              .finally(() => {
+                // always executed
+              });
+      }
+    }
   }
   </script>
   

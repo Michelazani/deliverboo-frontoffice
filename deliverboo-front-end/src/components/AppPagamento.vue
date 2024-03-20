@@ -74,20 +74,8 @@ export default {
       button.addEventListener('click', () => {
         instance.requestPaymentMethod((err, payload) => {
           if (err == null) {
-            axios.post(`http://127.0.0.1:8000/api/order`, JSON.parse(localStorage.getItem('fullOrder')))
-              .then((response) => {
-                // handle success
-                console.log(response.config.data);
                 // Reindirizza alla Thank you page
                 router.push({ name: 'thankyou' });
-              })
-              .catch((error) => {
-                // handle error
-                console.log(error);
-              })
-              .finally(() => {
-                // always executed
-              });
           }
         });
       });
