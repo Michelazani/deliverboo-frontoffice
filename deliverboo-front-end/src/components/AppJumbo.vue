@@ -4,7 +4,7 @@
         <div class="centered">
             <h1 class=""> Benvenuto su Deliverboo! </h1>
             <h2 class="d-none d-md-block">Siamo qui per portare i tuoi piatti preferiti direttamente a casa tua. </h2>
-            <a class="" href="/restaurants"> <button class="btn mt-3 ">Visualizza tutti i ristoranti a Milano!</button></a>
+            <a class="" href="/restaurants"> <button class="btn mt-3 btn-sm ">Visualizza tutti i ristoranti a Milano!</button></a>
         </div> 
     </div>
 </template>
@@ -34,7 +34,7 @@ export default {
             }
             button{
                 background-color:#00CCBC;
-                font-size:1.5rem;
+                // font-size:1.5rem;
             }
         }
     }
