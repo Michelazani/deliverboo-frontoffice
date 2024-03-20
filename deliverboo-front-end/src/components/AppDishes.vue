@@ -56,14 +56,14 @@
                 </ul>
                 <ul class="list-group" v-else>
                     <li v-for="(dishCart, index) in dishesCartList" :key="index" class="list-group-item">
-                        <div class="d-flex">
-                            <p class="me-2">{{ dishCart.name }}</p>
-                            <div class="d-flex input-group my-5 text-center">
+                        <div class="d-flex align-items-center">
+                            <p class="me-2 my-0">{{ dishCart.name }}</p>
+                            <div class="d-flex justify-content-center input-group my-5 text-center">
                                 <button data-count-type="+" :data-dish-Cart-id="dishCart.id" class="input-group-text " @click="(e)=>dishQuantityHandler(e)">+</button>
                                 <input data-count-type="input" type="text" :data-dish-Cart-id="dishCart.id" class="w-25" @input="(e)=>dishQuantityHandler(e)" :value=" dishCart.quantity" >
                                 <button data-count-type="-" :data-dish-Cart-id="dishCart.id" class="input-group-text" @click="(e)=>dishQuantityHandler(e)">-</button>
                             </div>
-                            <p class="me-2">{{ '€'+dishCart.price }}</p>
+                            <p class="me-2 my-0">{{ '€'+dishCart.price }}</p>
                             <button type="button"  :data-dish-id="dishCart.id" @click="(e)=>removeClickHandler(e)" class="btn btn-danger btn-sm my-5">X</button>
                         </div>
                     </li>
