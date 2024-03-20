@@ -42,7 +42,7 @@
         </button>
       </article>
     </li>
-  </ul>
+    </ul>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrello</h5>
@@ -54,7 +54,7 @@
                         <p class="text-muted">Il carrello è vuoto</p>
                     </li>
                 </ul>
-                <ul class="list-group" v-else">
+                <ul class="list-group" v-else>
                     <li v-for="(dishCart, index) in dishesCartList" :key="index" class="list-group-item">
                         <div class="d-flex">
                             <p class="me-2">{{ dishCart.name }}</p>
@@ -69,7 +69,7 @@
                     </li>
                 </ul>
                 <p class="mt-3">Totale: €{{ pricesSumFunc() }}</p>
-<button :class="dishesCartList.length == 0 ? 'd-none' : 'btn btn-success'" @click="confCart()">Vai al pagamento</button>
+                <button :class="dishesCartList.length == 0 ? 'd-none' : 'btn btn-success'" @click="(e)=>confCart(e)">Vai al pagamento</button>
             </div>
         </div>
     </div>
@@ -125,11 +125,18 @@ export default {
         });
     },
 
-    confCart() {
-      localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
-      localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
-      this.updateCartCount();
-      this.$router.push('/ordine');
+    confCart(e) {
+        localStorage.setItem('cart', JSON.stringify(this.dishesCartList));
+        localStorage.setItem('totPrice', JSON.stringify(this.pricesSumFunc()));
+        this.updateCartCount();
+        const body = e.target.closest('body');
+        console.log(body);
+        body.removeAttribute('style');
+        // div.removeAttribute('aria-modal');
+        // div.removeAttribute('role');
+        // div.classList.remove('show');
+        // console.log(div);
+        this.$router.push('/ordine');
     },
 
     addClickHandler(dish) {
