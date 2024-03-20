@@ -5,6 +5,7 @@ import AppPagamento from './components/AppPagamento.vue';
 import AppOrder from './components/AppOrder.vue';
 import ChiSiamo from './components/ChiSiamo.vue';
 import AppJumbo from './components/AppJumbo.vue';
+import ThankYou from './components/ThankYou.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -37,6 +38,11 @@ const router = createRouter({
                 path: '/chisiamo',
                 name: 'chisiamo',
                 component: ChiSiamo
+            },
+            {
+                path: '/grazie',
+                name: 'thankyou',
+                component: ThankYou
             },
             // {
             //     path: '/chisiamo',

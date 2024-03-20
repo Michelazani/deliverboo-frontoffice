@@ -61,37 +61,38 @@ export default {
         };
     },
     mounted() {
-        // Recupera il riepilogo dell'ordine dal localStorage
-        this.dishesCartList = JSON.parse(localStorage.getItem('cart')) || [];
-        this.totalPrice = JSON.parse(localStorage.getItem('totPrice')) || 0;
+    // Recupera il riepilogo dell'ordine dal localStorage
+    this.dishesCartList = JSON.parse(localStorage.getItem('cart')) || [];
+    this.totalPrice = JSON.parse(localStorage.getItem('totPrice')) || 0;
 
-        let button = document.querySelector('#submit-button');
+    let button = document.querySelector('#submit-button');
 
-        braintree.dropin.create({
-            authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
-            selector: '#dropin-container',
-        }, function (err, instance) {
-            button.addEventListener('click', function () {
-                instance.requestPaymentMethod(function (err, payload) {
-                    if(err == null){
-                        axios.post(`http://127.0.0.1:8000/api/order`, JSON.parse(localStorage.getItem('fullOrder')))
-                        .then((response) => {
-                            // handle success
-                            console.log(response.config.data);
-                        })
-                        .catch(function (error) {
-                            // handle error
-                            console.log(error);
-                        })
-                        .finally(function () {
-                            // always executed
-                        });
-                        router.push({name: 'restaurants'});
-                    }
-                });
-            })
+    braintree.dropin.create({
+      authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
+      selector: '#dropin-container',
+    }, (err, instance) => {
+      button.addEventListener('click', () => {
+        instance.requestPaymentMethod((err, payload) => {
+          if (err == null) {
+            axios.post(`http://127.0.0.1:8000/api/order`, JSON.parse(localStorage.getItem('fullOrder')))
+              .then((response) => {
+                // handle success
+                console.log(response.config.data);
+                // Reindirizza alla Thank you page
+                router.push({ name: 'thankyou' });
+              })
+              .catch((error) => {
+                // handle error
+                console.log(error);
+              })
+              .finally(() => {
+                // always executed
+              });
+          }
         });
-    },
+      });
+    });
+  },
     methods: {
         goBack() {
             router.go(-1); // Torna alla view precedente
