@@ -8,7 +8,7 @@
             <a class="navbar-brand" href="http://127.0.0.1:8000/login">Area ristoratore</a>
             <router-link class="navbar-brand" to="/chisiamo">Chi Siamo</router-link>
             <button v-if="showCart" class="btn my_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-              Vai al carrello <span class="badge bg-secondary">{{ cartItemCount }}</span>
+              Vai al carrello
             </button>
           </div>
         </div>
@@ -47,10 +47,6 @@
         updateShowCartFlag(route) {
         this.showCart = route.name === 'dishes'; // Mostra il carrello solo nella vista dei piatti
         },
-        resetCartCount() {
-        localStorage.setItem('cartItemCount', '0'); // Resetta il conteggio del carrello
-        this.updateCartItemCount(); // Aggiorna il conteggio del carrello nel componente
-        }
     }
   };
   </script>
