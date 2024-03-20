@@ -30,7 +30,7 @@
                         </span>
                     </p>
                     <p>Indirizzo: {{ restaurant.address_restaurant}}</p>
-                    <button type="button" :data-restaurant-id="restaurant.id" @click="(e)=>clickHandler(e)" class="btn btn-info">Visualizza il Menu</button>
+                    <button type="button" :data-restaurant-id="restaurant.id" @click="(e)=>clickHandler(e)" class="btn btn-info btn-menu">Visualizza il Menu</button>
                 </article>            
             </li>
         </ul>
@@ -175,4 +175,5 @@ export default {
 </script>
 
 <style lang="scss">
+
 </style>
