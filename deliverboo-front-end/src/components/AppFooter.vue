@@ -14,7 +14,7 @@
                 <a class="text-decoration-none" href="*">Diventa nostro partner</a>
             </div>
 
-                <div class="d-flex flex-column rounded">
+                <div class="d-flex flex-column">
                     <span class="fw-bold fs-5 mb-2 text-white">Note legali</span>
                     <a class="text-decoration-none" href="*">Termini & Condizioni</a>
                     <a class="text-decoration-none" href="*">Informativa sulla privacy</a>
@@ -23,7 +23,7 @@
                     <a class="text-decoration-none" href="*">Richieste da parte delle Auotorità Pubbliche</a>
                 </div>
 
-                <div class="d-flex flex-column rounded">
+                <div class="d-flex flex-column">
                     <span class="fw-bold fs-5 mb-2 text-white">Aiuto</span>
                     <a class="text-decoration-none" href="*">Contatti</a>
                     <a class="text-decoration-none" href="*">FAQ</a>
