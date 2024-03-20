@@ -10,7 +10,7 @@
             </div>
             <ul class="list-unstyled row">
                 <li class="col-sm-6 col-md-3 d-flex justify-content-center p-3" v-for="(restaurant,index) in typesFilterFunc(store.typeFilter, restaurants)" :key="index"> 
-                    <article class="card text-center mx-auto p-3 w-100" >
+                    <article class="card text-center mx-auto p-3 w-100 border-none" >
                         <div class="h-50 d-flex justify-content-center align-items-center">
                             <h1>{{ restaurant.name_restaurant }}</h1>
                         </div>
@@ -173,5 +173,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+article:hover{
+    border: 1px solid #00CCBC ;
+}
 </style>
